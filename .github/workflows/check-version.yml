@@ -26,9 +26,15 @@ jobs:
           url: https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest
           method: "GET"
           log-response: true
+
+
+      - name: Extract version from package.json
+        uses: sergeysova/jq-action@v2
+        id: version
+        with:
+          cmd: 'jq .version package.json -r'
       - name: "Use response"
         run: |
-          reponse=`echo ${{ steps.api.outputs.response }}`
-          version=`echo $(jq -r '.name' <<< "$reponse")`
+          version=`echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'`
           echo $version
           ## echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'
