@@ -28,11 +28,9 @@ jobs:
           log-response: true
 
 
-      - name: Extract version from package.json
-        uses: sergeysova/jq-action@v2
-        id: version
-        with:
-          cmd: echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'
-      
-      - name: "Use response"
-        run: echo ${{ steps.version.outputs.response }} 
+      - name: Extract version from API response
+        run: |
+          echo "Latest release response: ${{ steps.api.outputs.response }}"
+          version=$(echo "${{ steps.api.outputs.response }}" | jq -r '.tag_name' | sed 's/^v//')
+          echo "Extracted version: $version"
+        shell: bash
