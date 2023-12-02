@@ -19,17 +19,15 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Checkout branch "master"
         uses: actions/checkout@v4
-      - name: "Call API"
-        uses: indiesdev/curl@v1.1
-        id: api
-        with:
-          url: https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest
-          method: "GET"
-          #log-response: true
       
       - name: Extract version from API response
         run: |
-          echo "Latest release response: ${{ steps.api.outputs.response }}"
-          version=$(echo "${{ steps.api.outputs.response }}" | jq -r '.tag_name' | sed 's/^v//')
-          echo "Extracted version: $version"
+          SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
+          echo "Extracted version: $SEMAPHORE_VERSION"
+        shell: bash
+        
+      - name: Extract version from API response
+        run: |
+          SEMAPHORE_VERSION2=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+          echo "Extracted version: $SEMAPHORE_VERSION2"
         shell: bash
