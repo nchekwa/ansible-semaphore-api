@@ -23,6 +23,7 @@ jobs:
           log-response: true
       - name: "Use response"
         run: |
-          version=`echo $(jq -r '.name' <<< "${{ steps.api.outputs.response }}")`
+          reponse=`echo ${{ steps.api.outputs.response }}`
+          version=`echo $(jq -r '.name' <<< $reponse)`
           echo $version
           ## echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'
