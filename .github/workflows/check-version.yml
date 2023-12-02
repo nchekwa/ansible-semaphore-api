@@ -1,4 +1,4 @@
-name: Nightly Snapshot
+name: Check version
 
 on:
   schedule:
