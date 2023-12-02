@@ -1,0 +1,82 @@
+name: Generate OpenAPI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'variable.env'
+      - '.github/workflows/openapi-generator.yml'
+
+jobs:
+  generate_openapi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Read variable.env and set variable
+        id: read-version
+        run: |
+          cat variable.env >> "$GITHUB_ENV"
+          echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+           
+      - name: Set up OpenAPI Generator
+        run: |
+          mkdir -p ~/bin/openapitools
+          curl -s https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh -o ~/bin/openapitools/openapi-generator-cli
+          chmod u+x ~/bin/openapitools/openapi-generator-cli
+          
+      - name: Generate OpenAPI
+        run: |
+          cd /tmp
+          OWNER=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f1)
+          REPOSITORY=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
+          curl "https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o /tmp/api-docs.yml
+          bash ~/bin/openapitools/openapi-generator-cli generate -i /tmp/api-docs.yml -g python --git-user-id $OWNER --git-repo-id $REPOSITORY -o /tmp/openapi --package-name $PYPI_NAME
+          ls -la /tmp/openapi
+
+      - name: Update repository
+        run: |
+          cd $CI_PROJECT_DIR
+          rm -fR $CI_PROJECT_DIR/$PYPI_NAME && cp -r /tmp/openapi/$PYPI_NAME $CI_PROJECT_DIR/
+          rm -fR $CI_PROJECT_DIR/docs && cp -r /tmp/openapi/docs $CI_PROJECT_DIR/
+          rm -fR $CI_PROJECT_DIR/test && cp -r /tmp/openapi/test $CI_PROJECT_DIR/
+          cp /tmp/openapi/README.md $CI_PROJECT_DIR/README_OPENAPI.md
+          ls -la $CI_PROJECT_DIR/
+          #echo -e "include ../requirements.txt\ninclude py.typed" > $CI_PROJECT_DIR/$PYPI_NAME/MANIFEST.in
+          
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          cd $CI_PROJECT_DIR
+          echo "GITHUB_CHANGES=false" >> $GITHUB_ENV
+          
+          if git status --porcelain | grep -q '^??'; then
+            echo "Git Status: Untracked files found. Adding them to the staging area."
+            echo "GITHUB_CHANGES=true" >> $GITHUB_ENV
+          elif git status --porcelain | grep -q '^\s*D'; then
+            echo "Git Status: Deleted files found. Perform actions for deleted files."
+            echo "GITHUB_CHANGES=true" >> $GITHUB_ENV
+          else
+            echo "Git Status: No untracked or deleted files."
+          fi
+
+          if ! git diff --quiet; then
+              echo "Git Files Diff: Changes detected in some files, proceeding with commit."
+              echo "GITHUB_CHANGES=true" >> $GITHUB_ENV
+          else
+              echo "Git Files Diff: No differences found between the working directory and the staging area."      
+          fi
+
+      - name: Commit changes
+        if: env.GITHUB_CHANGES == 'true'
+        run: |
+          git config --local user.name actions-user
+          git config --local user.email "github@nchekwa.com"
+          git status
+          git add --all
+          git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"
+          git push -f origin main
