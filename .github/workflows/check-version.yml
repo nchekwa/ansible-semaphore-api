@@ -26,8 +26,7 @@ jobs:
           url: https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest
           method: "GET"
           log-response: true
-
-
+      
       - name: Extract version from API response
         run: |
           echo "Latest release response: ${{ steps.api.outputs.response }}"
