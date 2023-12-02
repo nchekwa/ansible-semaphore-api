@@ -3,7 +3,6 @@
 [![Python PyPi](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/python-pypi.yml/badge.svg)](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/python-pypi.yml)
 
 [Ansible Semaphore](https://www.ansible-semaphore.com/) Python API Lib <br> 
-https://github.com/ansible-semaphore/semaphore
 
 
 <br>
