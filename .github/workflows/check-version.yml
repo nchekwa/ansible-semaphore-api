@@ -2,7 +2,7 @@ name: Check version
 
 on:
   schedule:
-  - cron: "* * * * *"
+  - cron: '*/5 * * * *'
 
 jobs:
   tag:
