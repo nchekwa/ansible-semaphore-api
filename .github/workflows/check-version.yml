@@ -32,9 +32,7 @@ jobs:
         uses: sergeysova/jq-action@v2
         id: version
         with:
-          cmd: 'jq .version package.json -r'
+          cmd: echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'
+      
       - name: "Use response"
-        run: |
-          version=`echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'`
-          echo $version
-          ## echo ${{ steps.api.outputs.response }} | jq -r '.name' | sed 's/^v//'
+        run: echo ${{ steps.version.outputs.response }} 
