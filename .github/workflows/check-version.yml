@@ -2,7 +2,7 @@ name: Check version
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '30 3 * * *'
   #push:
   #  branches:
   #    - main
