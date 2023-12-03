@@ -5,7 +5,7 @@ on:
   #  - cron: '*/5 * * * *'
   push:
     branches:
-      - dev
+      - main
     paths:
       - '.github/workflows/check-version.yml'
       
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout branch "master"
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: main
       
       - name: Extract version from Ansible Semaphore Github API response
         run: |
@@ -58,7 +58,6 @@ jobs:
 
       - name: Commit changes
         run: |
-          exit 0
           git config --local user.name actions-user
           git config --local user.email "github@nchekwa.com"
           git status
