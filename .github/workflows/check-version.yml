@@ -43,6 +43,7 @@ jobs:
             echo "PYPI_NAME=semaphore_api" > variable.env
             echo "SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
             echo "PYPI_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
+            echo "GITHUB_CHANGES=true" >> $GITHUB_ENV
           else
             echo "Versions are the same. No update needed."
             exit 0
@@ -57,6 +58,7 @@ jobs:
         shell: bash
 
       - name: Commit changes
+        if: env.GITHUB_CHANGES == 'true'
         run: |
           git config --local user.name actions-user
           git config --local user.email "github@nchekwa.com"
