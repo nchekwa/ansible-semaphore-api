@@ -7,8 +7,14 @@
 
 <br>
 
+[PyPi](https://pypi.org/static/images/logo-large.9f732b5f.svg)
+```bash
+pip install semaphore-api
+```
 
-Manual installation:
+-or- Manual installation:
 ```bash
 pip install semaphore_api-2.x.x-py3-none-any.whl
 ```
+
+
