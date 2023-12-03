@@ -5,7 +5,7 @@ on:
   #  - cron: '*/5 * * * *'
   push:
     branches:
-      - main
+      - dev
     paths:
       - '.github/workflows/check-version.yml'
       
@@ -22,12 +22,31 @@ jobs:
       
       - name: Extract version from API response
         run: |
-          SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
-          echo "Extracted version: $SEMAPHORE_VERSION"
+          PAGE_SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
+          echo "Extracted version: $PAGE_SEMAPHORE_VERSION"
+          cat "PAGE_SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> "$GITHUB_ENV"
         shell: bash
-        
-      - name: Extract version from API response
+
+      - name: Read variable.env and set variable
+        id: read-version
         run: |
-          SEMAPHORE_VERSION2=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.tag_name' | sed 's/^v//')
-          echo "Extracted version: $SEMAPHORE_VERSION2"
+          cat variable.env
+          cat variable.env >> "$GITHUB_ENV"
+
+      - name: Extract version from API response
+        run: |      
+          if [ "$PAGE_SEMAPHORE_VERSION" != "$SEMAPHORE_VERSION" ]; then
+            echo "Versions are different. Updating SEMAPHORE_VERSION to PAGE_SEMAPHORE_VERSION."
+            echo "SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" > variable.env
+
+          else
+            echo "Versions are the same. No update needed."
+          fi
+      
+          echo "Final SEMAPHORE_VERSION: $SEMAPHORE_VERSION"
+        shell: bash
+    
+      - name: Extract version from API response
+        run: |      
+         cat variable.env
         shell: bash
