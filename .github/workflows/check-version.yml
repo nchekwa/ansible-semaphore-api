@@ -23,20 +23,20 @@ jobs:
         with:
           ref: dev
       
-      - name: Extract version from API response
+      - name: Extract version from Ansible Semaphore Github API response
         run: |
           PAGE_SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
           echo "Extracted version: $PAGE_SEMAPHORE_VERSION"
           echo "PAGE_SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> "$GITHUB_ENV"
         shell: bash
 
-      - name: Read variable.env and set variable
+      - name: Read variable.env and set env variable
         id: read-version
         run: |
           cat variable.env
           cat variable.env >> "$GITHUB_ENV"
 
-      - name: Extract version from API response
+      - name: Compare versions
         run: |      
           if [ "$PAGE_SEMAPHORE_VERSION" != "$SEMAPHORE_VERSION" ]; then
             echo "Versions are different. Updating SEMAPHORE."
@@ -51,9 +51,19 @@ jobs:
           echo "Final SEMAPHORE set: $PAGE_SEMAPHORE_VERSION"
         shell: bash
     
-      - name: Extract check version from new created variable.env
+      - name: Print new file version
         run: |      
          cat variable.env
         shell: bash
+
+      - name: Commit changes
+        run: |
+          exit 0
+          git config --local user.name actions-user
+          git config --local user.email "github@nchekwa.com"
+          git status
+          git add variable.env
+          git commit -am "GitHub Actions Check Version Update $(date +"%Y-%m-%d %H:%M:%S")"
+          git push -f origin main
 
 
