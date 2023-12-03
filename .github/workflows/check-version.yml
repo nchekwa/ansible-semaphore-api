@@ -39,17 +39,21 @@ jobs:
       - name: Extract version from API response
         run: |      
           if [ "$PAGE_SEMAPHORE_VERSION" != "$SEMAPHORE_VERSION" ]; then
-            echo "Versions are different. Updating SEMAPHORE_VERSION to PAGE_SEMAPHORE_VERSION."
-            echo "SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" > variable.env
-
+            echo "Versions are different. Updating SEMAPHORE."
+            echo "PYPI_NAME=semaphore_api" > variable.env
+            echo "SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
+            echo "PYPI_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
           else
             echo "Versions are the same. No update needed."
+            exit 0
           fi
       
-          echo "Final SEMAPHORE_VERSION: $SEMAPHORE_VERSION"
+          echo "Final SEMAPHORE set: $PAGE_SEMAPHORE_VERSION"
         shell: bash
     
-      - name: Extract version from API response
+      - name: Extract check version from new created variable.env
         run: |      
          cat variable.env
         shell: bash
+
+
