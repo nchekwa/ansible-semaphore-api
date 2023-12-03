@@ -7,12 +7,12 @@
 
 <br>
 
-[PyPi](https://pypi.org/static/images/logo-large.9f732b5f.svg)
+![PyPi](https://pypi.org/static/images/logo-small.2a411bc6.svg) 
 ```bash
 pip install semaphore-api
 ```
 
--or- Manual installation:
+-or- manual installation:
 ```bash
 pip install semaphore_api-2.x.x-py3-none-any.whl
 ```
