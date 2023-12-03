@@ -27,7 +27,7 @@ jobs:
         run: |
           PAGE_SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
           echo "Extracted version: $PAGE_SEMAPHORE_VERSION"
-          cat "PAGE_SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> "$GITHUB_ENV"
+          echo "PAGE_SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> "$GITHUB_ENV"
         shell: bash
 
       - name: Read variable.env and set variable
