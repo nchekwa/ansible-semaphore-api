@@ -13,6 +13,9 @@ jobs:
   tag:
     name: Tag
     runs-on: ubuntu-latest
+    env:
+      GITHUB_CHANGES: "false"
+    
     steps:
       - name: Get current date
         id: date
@@ -37,7 +40,8 @@ jobs:
           cat variable.env >> "$GITHUB_ENV"
 
       - name: Compare versions
-        run: |      
+        run: |
+          echo "GITHUB_CHANGES=false" >> $GITHUB_ENV
           if [ "$PAGE_SEMAPHORE_VERSION" != "$SEMAPHORE_VERSION" ]; then
             echo "Versions are different. Updating SEMAPHORE."
             echo "PYPI_NAME=semaphore_api" > variable.env

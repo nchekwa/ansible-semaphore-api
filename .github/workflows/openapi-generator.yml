@@ -11,7 +11,9 @@ on:
 jobs:
   generate_openapi:
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_CHANGES: "false"
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
