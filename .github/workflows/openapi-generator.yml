@@ -21,10 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_CHANGES: "false"
-      
+      BRANCH: dev
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4s
+        uses: actions/checkout@v4
 
       - uses: actions/setup-java@v4
         with:
