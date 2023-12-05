@@ -9,6 +9,7 @@ on:
       - '.github/workflows/openapi-generator.yml'
 
 jobs:
+  ### Generate OpenAPI ######################################################
   generate_openapi:
     runs-on: ubuntu-latest
     env:
@@ -120,4 +121,7 @@ jobs:
           git add --all
           git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"
           #git push -f origin main
-          git push
+          git push -f
+
+    outputs:
+      github_changes: ${{ env.GITHUB_CHANGES }}
