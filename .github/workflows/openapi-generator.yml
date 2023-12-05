@@ -39,7 +39,7 @@ jobs:
       - name: OpenAPI Download Ansible Semaphore API-Docs
         run: |
           OWNER=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f1)        &&  echo "OWNER=$OWNER" >> "$GITHUB_ENV"
-          REPOSITORY=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)   s&&  echo "REPOSITORY=$REPOSITORY" >> "$GITHUB_ENV"
+          REPOSITORY=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)   &&  echo "REPOSITORY=$REPOSITORY" >> "$GITHUB_ENV"
           cd /tmp/
           curl "https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o api-docs.yml
           
