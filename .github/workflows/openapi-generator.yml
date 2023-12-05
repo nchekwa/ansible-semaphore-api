@@ -19,6 +19,7 @@ permissions:
 jobs:
   ### Generate OpenAPI ######################################################
   generate_openapi:
+    environment: staging
     runs-on: ubuntu-latest
     env:
       GIT_PUSH: "false"
