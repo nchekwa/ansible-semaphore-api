@@ -142,7 +142,9 @@ jobs:
     needs: build
     if:  ${{ needs.build.outputs.github_changes == 'true' }}
     permissions:
-      contents: read
+      contents: write
+      pull-requests: write
+      repository-projects: write
       id-token: write 
        # IMPORTANT: (id-token) this permission is mandatory for trusted publishing
        
