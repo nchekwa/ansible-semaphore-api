@@ -11,7 +11,15 @@ on:
 jobs:
   create-release:
     name: Create Release
+    environment: production
     runs-on: ubuntu-latest
+    env:
+      GIT_PUSH: "false"
+      PYPI_NAME: ${{ vars.PYPI_NAME }}
+      PYPI_VERSION: ${{ vars.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ vars.SEMAPHORE_VERSION }}
+      PYPI_PUBLISH: ${{ vars.PYPI_PUBLISH }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@master
@@ -33,7 +41,7 @@ jobs:
 
       - name: Publish distribution 📦 to Github Release ${{ github.ref }}
         uses: xresloader/upload-to-github-release@main
-        if: env.PYPI_BLOCK != 'true'
+        if: env.PYPI_PUBLISH == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
