@@ -1,3 +1,5 @@
+name: Create Release
+
 on:
   push:
     # Sequence of patterns matched against refs/tags
@@ -8,10 +10,9 @@ on:
     paths:
       - '.github/workflows/github-release.yml'
       
-name: Create Release
 
 jobs:
-  build:
+  create-release:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
