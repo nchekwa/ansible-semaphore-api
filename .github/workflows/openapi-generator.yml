@@ -111,7 +111,11 @@ jobs:
           git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"s
           git push -f
 
+
     outputs:
       GIT_PUSH: ${{ env.GIT_PUSH }}
 
 
+  call-workflow-test:
+    uses: ./.github/workflows/python-test.yaml
+    secrets: inherit
