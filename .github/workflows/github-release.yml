@@ -1,15 +1,12 @@
-name: Create Release
+name: Github Create Release
 
 on:
+  workflow_dispatch:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
     branches:
       - main
-    paths:
-      - '.github/workflows/release.yml'
-      
 
 jobs:
   create-release:
@@ -36,6 +33,7 @@ jobs:
 
       - name: Publish distribution 📦 to Github Release ${{ github.ref }}
         uses: xresloader/upload-to-github-release@main
+        if: env.PYPI_BLOCK != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
