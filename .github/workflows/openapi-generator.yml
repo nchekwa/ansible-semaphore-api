@@ -16,40 +16,13 @@ jobs:
       GITHUB_CHANGES: "false"
       
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: 'main'
-
-      - name: Set Git Config
-        run: |
-          git config --global user.email "autogen@nchekwa.com"
-          git config --global user.name "OpenAPI Autogen"
-  
-      - name: Check if openapi-autogen exists and remove if present
-        run: |
-          if git show-ref --quiet refs/heads/openapi-autogen; then
-              git branch -D openapi-autogen
-              echo "Delete openapi-autogen"
-          fi
-
-      - name: Recreate branch-deploy openapi-autogen based on main
+      - name: branch-deploy
+        id: branch-deploy
         uses: github/branch-deploy@v8.1.2
-        id: openapi-autogen
 
-      - name: Recreate openapi-autogen based on main
-        run: |
-          sleep 15
-
-      - name: Switch to openapi-autogen branch
-        run: |
-          git checkout openapi-autogen
-
-          
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          ref: 'openapi-autogen'
+          ref: ${{ steps.branch-deploy.outputs.ref }}
 
       - uses: actions/setup-java@v4
         with:
