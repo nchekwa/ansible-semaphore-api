@@ -22,6 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GIT_PUSH: "false"
+      PYPI_NAME: ${{ vars.PYPI_NAME }}
+      PYPI_VERSION: ${{ vars.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ vars.SEMAPHORE_VERSION }}
 
     steps:
       - name: Checkout code
