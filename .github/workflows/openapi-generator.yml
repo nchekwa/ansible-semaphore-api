@@ -8,9 +8,16 @@ on:
       - 'variable.env'
       - '.github/workflows/openapi-generator.yml'
 
+permissions:
+  pull-requests: write
+  deployments: write
+  contents: write
+  checks: read
+
 jobs:
   ### Generate OpenAPI ######################################################
   generate_openapi:
+    environment: secrets
     runs-on: ubuntu-latest
     env:
       GITHUB_CHANGES: "false"
