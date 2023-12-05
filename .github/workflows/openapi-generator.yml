@@ -44,7 +44,7 @@ jobs:
         run: |
           cat variable.env >> "$GITHUB_ENV"
           echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
-          rm -R $CI_PROJECT_DIR/semaphore_api
+          rm -fR $CI_PROJECT_DIR/semaphore_api
         
       - name: Set up OpenAPI Generator
         run: |
