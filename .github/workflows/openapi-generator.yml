@@ -119,4 +119,5 @@ jobs:
           git status
           git add --all
           git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"
-          git push -f origin main
+          #git push -f origin main
+          git push
