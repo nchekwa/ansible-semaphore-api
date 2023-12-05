@@ -2,6 +2,7 @@ name: OpenAPI Generator
 
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main

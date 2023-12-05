@@ -10,6 +10,7 @@ on:
 jobs:
 ### TEST ######################################################
   test:
+    environment: staging
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
