@@ -19,17 +19,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: 'openapi-autogen'
+          ref: 'main'
 
-      - name: Overwrite OpenAPI Autogen with Main
+      - name: Set Git Config
         run: |
-          rm -fR $GITHUB_WORKSPACE/*
           git config --global user.email "autogen@nchekwa.com"
           git config --global user.name "OpenAPI Autogen"
-          git config --global pull.rebase true
-          git pull origin main
-          git checkout -B openapi-autogen
-          git push --force-with-lease origin openapi-autogen
+  
+      - name: Check if openapi-autogen exists and remove if present
+        run: |
+          if git show-ref --quiet refs/heads/openapi-autogen; then
+              git branch -D openapi-autogen
+          fi
+
+      - name: Recreate openapi-autogen based on main
+        run: |
+          git checkout main
+          git checkout -b openapi-autogen
+
+      - name: Switch to openapi-autogen branch
+        run: |
+          git checkout openapi-autogen
+
           
       - name: Checkout code
         uses: actions/checkout@v2
