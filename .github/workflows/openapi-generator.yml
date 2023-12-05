@@ -25,6 +25,8 @@ jobs:
       - name: Rebase from main if branch 
         run: |
           BRANCH=openapi-autogen
+          git config --global user.email "autogen@nchekwa.com"
+          git config --global user.name "Openapi Autogen"
           git fetch --all
           git reset --mixed origin/$BRANCH
           git add .
