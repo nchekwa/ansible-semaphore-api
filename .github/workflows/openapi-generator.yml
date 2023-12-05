@@ -33,10 +33,12 @@ jobs:
               echo "Delete openapi-autogen"
           fi
 
+      - name: Recreate branch-deploy openapi-autogen based on main
+        uses: github/branch-deploy@v8.1.2
+        id: openapi-autogen
+
       - name: Recreate openapi-autogen based on main
         run: |
-          git checkout main
-          git checkout -b openapi-autogen
           sleep 15
 
       - name: Switch to openapi-autogen branch
