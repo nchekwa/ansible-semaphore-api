@@ -17,31 +17,25 @@ permissions:
 jobs:
   ### Generate OpenAPI ######################################################
   generate_openapi:
-    environment: secrets
     runs-on: ubuntu-latest
     env:
       GITHUB_CHANGES: "false"
       
     steps:
-      - name: branch-deploy
-        id: branch-deploy
-        uses: github/branch-deploy@v8.1.2
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.branch-deploy.outputs.ref }}
+      - name: Checkout code
+        uses: actions/checkout@v4s
 
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-        
+
       - name: Read variable.env and set variable
         id: read-version
         run: |
           cat variable.env >> "$GITHUB_ENV"
           echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
- 
+
       - name: Set up OpenAPI Generator
         run: |
           wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O /tmp/openapi-generator-cli.jar
@@ -85,7 +79,7 @@ jobs:
           cp /tmp/openapi/README.md $CI_PROJECT_DIR/README_OPENAPI.md
           ls -la $CI_PROJECT_DIR/
           #echo -e "include ../requirements.txt\ninclude py.typed" > $CI_PROJECT_DIR/$PYPI_NAME/MANIFEST.in
-          
+
       - name: Check for changes
         id: check_changes
         run: |
