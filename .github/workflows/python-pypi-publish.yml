@@ -1,0 +1,50 @@
+name: Python PyPi Pubslish
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      config-path:
+        required: false
+        type: string
+
+jobs:
+  publish:
+    name: Publish PyPi
+    environment: production
+    runs-on: ubuntu-latest
+    env:
+      GIT_PUSH: "false"
+      PYPI_NAME: ${{ vars.PYPI_NAME }}
+      PYPI_VERSION: ${{ vars.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ vars.SEMAPHORE_VERSION }}
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+      id-token: write 
+       # IMPORTANT: (id-token) this permission is mandatory for trusted publishing
+       
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@v1.8.11
+      with:
+        skip-existing: true
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+    
+    - name: Create Tag
+      uses: actions/github-script@v7
+      env:
+        PYPI_VERSION: ${{env.PYPI_VERSION}}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |        
+          github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/v${{env.PYPI_VERSION}}`,
+              sha: context.sha
+          })

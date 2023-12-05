@@ -1,5 +1,4 @@
-name: Python PyPi
-
+name: Python PyPi Build
 
 on:
   workflow_dispatch:
@@ -52,11 +51,11 @@ jobs:
         id: file_count
         run: |
             echo "GIT_PUSH=false" >> $GITHUB_ENV
-            FILE_COUNT=$(ls -1 $CI_PROJECT_DIR/dist/ | wc -l)
+            FILE_COUNT=$(ls -1 $GITHUB_WORKSPACE/dist/ | wc -l)
             echo "Number of files in dist folder: $FILE_COUNT"
             if [ $((FILE_COUNT)) -gt 0 ]; then
               echo "New dist/ file generated."
-              ls -l $CI_PROJECT_DIR/dist
+              ls -l $GITHUB_WORKSPACE/dist
               echo "GIT_PUSH=true" >> $GITHUB_ENV
             else
               echo "No new files generated."
