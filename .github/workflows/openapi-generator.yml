@@ -42,7 +42,8 @@ jobs:
           
       - name: OpenAPI Extract Python Template
         run: |
-          java -jar openapi-generator-cli.jar author template \
+          cd /tmp/ &&
+          java -jar /tmp/openapi-generator-cli.jar author template \
             -g python \
             -o templates/python
 
@@ -52,7 +53,8 @@ jobs:
           
       - name: OpenAPI Generate
         run: |
-          java -jar openapi-generator-cli.jar generate \
+          cd /tmp/ &&
+          java -jar /tmp/openapi-generator-cli.jar generate \
             -i api-docs.yml \
             -g python \
             -t templates/python \

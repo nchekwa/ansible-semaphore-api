@@ -162,10 +162,12 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
     
     - name: Create Tag
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
+      env:
+        TAG: "v${PYPI_VERSION}"
       with:
-        script: |
-          const {PYPI_VERSION} = process.env          
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |        
           github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
