@@ -26,8 +26,8 @@ jobs:
           git config --global user.email "autogen@nchekwa.com"
           git config --global user.name "OpenAPI Autogen"
           git config pull.rebase true
-          git rebase --skip
           git pull origin main
+          git rebase --skip
           git checkout -B openapi-autogen
           git push --force-with-lease origin openapi-autogen
           
