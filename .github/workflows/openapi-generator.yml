@@ -3,7 +3,6 @@ name: Generate OpenAPI
 on:
   push:
     branches:
-      - openapi-autogen
       - main
     paths:
       - 'variable.env'
@@ -17,21 +16,23 @@ jobs:
       
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: 'openapi-autogen'
-      
-      - name: Rebase from main if branch 
+        uses: actions/checkout@v2
+
+      - name: Switch to or Create Branch
         run: |
-          BRANCH=main
-          git config --global user.email "autogen@nchekwa.com"
-          git config --global user.name "Openapi Autogen"
-          git fetch --all
-          git reset --mixed origin/$BRANCH
-          git add .
-          git commit -m "a new openapi-autogen"
-          git push origin HEAD:$BRANCH
-      
+          git fetch origin openapi-autogent || true
+          git checkout -b openapi-autogent origin/openapi-autogent || git checkout -b openapi-autogent
+
+      - name: Rebase from main if branch exists
+        run: |
+          BRANCH_EXISTS=$(git show-ref --quiet refs/heads/openapi-autogent && echo "true" || echo "false")
+          if [[ $BRANCH_EXISTS == "true" ]]; then
+            git checkout main
+            git pull origin main
+            git checkout openapi-autogent
+            git rebase main
+          fi
+
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
@@ -42,8 +43,7 @@ jobs:
         run: |
           cat variable.env >> "$GITHUB_ENV"
           echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
-          rm -fR $CI_PROJECT_DIR/semaphore_api
-        
+ 
       - name: Set up OpenAPI Generator
         run: |
           wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O /tmp/openapi-generator-cli.jar
@@ -120,4 +120,4 @@ jobs:
           git add --all
           git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"
           #git push -f origin main
-          git push -f
+          git push
