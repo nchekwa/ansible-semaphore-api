@@ -3,13 +3,16 @@ from setuptools import setup, find_packages
 from pathlib import Path
 
 long_description = """
-=====
 Ansible Semaphore API
-=====
 
-API Lib allows communication with Ansible-Semaphore API.
+API Python Client allows communication with Ansible-Semaphore API.
 
 API demo: https://www.ansible-semaphore.com/api-docs/
+
+Docs: https://github.com/nchekwa/ansible-semaphore-api
+
+This Package is Auto-Generated based on API-Docs from Ansible-Semaphore.
+ 
 """
 
 NAME = os.getenv('PYPI_NAME', "semaphore_api")   
