@@ -23,11 +23,11 @@ jobs:
 
       - name: Switch to or Create Branch
         run: |
-          git fetch --all
-          git reset --mixed origin/openapi-autogen
-          git add .
-          git commit -m "a new openapi-autogen"
-          git push origin HEAD:openapi-autogen
+          git config --global user.email "autogen@nchekwa.com"
+          git config --global user.name "OpenAPI Autogen"
+          git pull origin main
+          git checkout -B openapi-autogen
+          git push origin openapi-autogen
           
       - name: Checkout code
         uses: actions/checkout@v2
