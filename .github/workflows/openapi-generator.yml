@@ -1,5 +1,6 @@
 name: Generate OpenAPI
 
+
 on:
   push:
     branches:
