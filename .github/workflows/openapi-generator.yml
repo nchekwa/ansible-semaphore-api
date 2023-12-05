@@ -243,5 +243,40 @@ jobs:
           git commit -am "GitHub Actions PyPi Update $(date +"%Y-%m-%d %H:%M:%S")"
           git push -f 
 
+
+    - name: Create Pull Request
+      # https://github.com/peter-evans/create-pull-request
+      id: cpr
+      uses: peter-evans/create-pull-request@v5
+      with:
+        add-paths: |
+          semaphore_api/
+          test/
+          docs/
+          dist/
+        token: ${{ secrets.GITHUB_TOKEN }} 
+        commit-message: Update report
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        branch: main
+        delete-branch: false
+        title: 'New Code Generated'
+        body: |
+          New Code Generated
+          - Updated with *today's* date
+          - Auto-generated 
+        labels: |
+          report
+          automated pr
+        assignees: azdolinski
+        reviewers: azdolinski
+        team-reviewers: |
+          developers
+          qa-team
+        milestone: 1
+        draft: false
+
+
     outputs:
       github_changes: ${{ env.GITHUB_CHANGES }}
