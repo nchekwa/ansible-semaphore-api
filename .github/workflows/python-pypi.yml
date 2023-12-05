@@ -21,7 +21,8 @@ jobs:
   ### TEST ######################################################
   test:
     runs-on: ubuntu-latest
-    
+    env:
+      GITHUB_BUILD: "false"
     strategy:
       fail-fast: false
       matrix:
@@ -164,13 +165,13 @@ jobs:
     - name: Create Tag
       uses: actions/github-script@v7
       env:
-        TAG: "v${PYPI_VERSION}"
+        PYPI_VERSION: ${{env.PYPI_VERSION}}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |        
           github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: `refs/tags/v${PYPI_VERSION}`,
+              ref: `refs/tags/v${{env.PYPI_VERSION}}`,
               sha: context.sha
           })
