@@ -1,0 +1,39 @@
+--- api_client.mustache	2023-12-05 01:39:55.413692175 +0000
++++ api_client.mustache.fix	2023-12-05 01:40:05.143740585 +0000
+@@ -13,6 +13,7 @@
+ 
+ from urllib.parse import quote
+ from typing import Tuple, Optional, List
++from pydantic import SecretStr
+ {{#tornado}}
+ import tornado.gen
+ {{/tornado}}
+@@ -349,6 +340,7 @@
+         """Builds a JSON POST object.
+ 
+         If obj is None, return None.
++        If obj is SecretStr, return obj.get_secret_value()
+         If obj is str, int, long, float, bool, return directly.
+         If obj is datetime.datetime, datetime.date
+             convert to string in iso8601 format.
+@@ -361,6 +353,8 @@
+         """
+         if obj is None:
+             return None
++        elif isinstance(obj, SecretStr):
++            return obj.get_secret_value()
+         elif isinstance(obj, self.PRIMITIVE_TYPES):
+             return obj
+         elif isinstance(obj, list):
+@@ -382,7 +376,10 @@
+             # and attributes which value is not None.
+             # Convert attribute name to json key in
+             # model definition for request.
+-            obj_dict = obj.to_dict()
++            if hasattr(obj, 'to_dict') and callable(getattr(obj, 'to_dict')):
++                obj_dict = obj.to_dict()
++            else:
++                obj_dict = obj.__dict__
+ 
+         return {
+             key: self.sanitize_for_serialization(val)
