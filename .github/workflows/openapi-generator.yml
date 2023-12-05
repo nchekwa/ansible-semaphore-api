@@ -15,17 +15,21 @@ permissions:
   contents: write
   checks: read
 
+env:
+  BRANCH: dev
+
 jobs:
   ### Generate OpenAPI ######################################################
   generate_openapi:
     runs-on: ubuntu-latest
     env:
       GITHUB_CHANGES: "false"
-      BRANCH: dev
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
 
       - uses: actions/setup-java@v4
         with:
@@ -132,7 +136,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+      with:
+        ref: ${{ env.BRANCH }}
+  
     - name: Read variable.env and set variable
       id: read-version
       run: |
@@ -167,7 +173,7 @@ jobs:
         echo "GITHUB_BUILD=true" >> $GITHUB_ENV
 
     outputs:
-      github_build: ${{ env.GITHUB_BUILD }}   
+      github_build: ${{ env.GITHUB_BUILD }}
 
   ### BUILD ######################################################
   build:
@@ -183,7 +189,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
-    
+      with:
+        ref: ${{ env.BRANCH }}
+
     - name: Read variable.env and set variable
       id: read-version
       run: |
