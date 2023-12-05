@@ -17,8 +17,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: openapi-autogen
+
+      - name: Switch to or Create Branch
+        run: |
+          git fetch origin openapi-autogent || true
+          git checkout -b openapi-autogent origin/openapi-autogent || git checkout -b openapi-autogent
+
+      - name: Rebase from main if branch exists
+        run: |
+          BRANCH_EXISTS=$(git show-ref --quiet refs/heads/openapi-autogent && echo "true" || echo "false")
+          if [[ $BRANCH_EXISTS == "true" ]]; then
+            git checkout main
+            git pull origin main
+            git checkout openapi-autogent
+            git rebase main
+          fi
 
       - uses: actions/setup-java@v4
         with:
