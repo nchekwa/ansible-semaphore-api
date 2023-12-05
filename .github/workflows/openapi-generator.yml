@@ -3,7 +3,7 @@ name: Generate OpenAPI
 on:
   push:
     branches:
-      - main
+      - openapi-autogen
     paths:
       - 'variable.env'
       - '.github/workflows/openapi-generator.yml'
@@ -43,7 +43,8 @@ jobs:
         run: |
           cat variable.env >> "$GITHUB_ENV"
           echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
- 
+          rm -R $CI_PROJECT_DIR/semaphore_api
+        
       - name: Set up OpenAPI Generator
         run: |
           wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O /tmp/openapi-generator-cli.jar
