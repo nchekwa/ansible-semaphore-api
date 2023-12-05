@@ -117,5 +117,5 @@ jobs:
 
 
   call-workflow-test:
-    uses: ./.github/workflows/python-test.yaml
+    uses: ./.github/workflows/python-test.yml
     secrets: inherit
