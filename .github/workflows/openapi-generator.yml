@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - openapi-autogen
+      - main
     paths:
       - 'variable.env'
       - '.github/workflows/openapi-generator.yml'
