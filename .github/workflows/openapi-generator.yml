@@ -18,27 +18,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: '11'
+        
       - name: Read variable.env and set variable
         id: read-version
         run: |
           cat variable.env >> "$GITHUB_ENV"
           echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
-           
+ 
       - name: Set up OpenAPI Generator
         run: |
-          mkdir -p ~/bin/openapitools
-          curl -s https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh -o ~/bin/openapitools/openapi-generator-cli
-          chmod u+x ~/bin/openapitools/openapi-generator-cli
-          
-      - name: Generate OpenAPI
+          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O /tmp/openapi-generator-cli.jar
+
+      - name: OpenAPI Download Ansible Semaphore API-Docs
         run: |
-          cd /tmp
           OWNER=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f1)
           REPOSITORY=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
-          curl "https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o /tmp/api-docs.yml
-          bash ~/bin/openapitools/openapi-generator-cli generate -i /tmp/api-docs.yml -g python --git-user-id $OWNER --git-repo-id $REPOSITORY -o /tmp/openapi --package-name $PYPI_NAME
-          ls -la /tmp/openapi
+          cd /tmp/
+          curl "https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o api-docs.yml
+          
+      - name: OpenAPI Extract Python Template
+        run: |
+          java -jar  penapi-generator-cli.jar author template \
+            -g python \
+            -o templates/python
 
+      - name: Apply Patch on Python Template
+        run: |
+          patch -p1 /tmp/templates/python/api_client.mustache < $CI_PROJECT_DIR/patch/api_client.mustache.patch
+          
+      - name: OpenAPI Extract Python Template
+        run: |
+          java -jar openapi-generator-cli.jar generate \
+            -i api-docs.yml \
+            -g python \
+            -t templates/python \
+            -o openapi \
+            --package-name $PYPI_NAME \
+            --git-repo-id $REPOSITORY \
+            --git-user-id $OWNER
+        
       - name: Update repository
         run: |
           cd $CI_PROJECT_DIR
@@ -49,7 +71,6 @@ jobs:
           ls -la $CI_PROJECT_DIR/
           #echo -e "include ../requirements.txt\ninclude py.typed" > $CI_PROJECT_DIR/$PYPI_NAME/MANIFEST.in
           
-      
       - name: Check for changes
         id: check_changes
         run: |
