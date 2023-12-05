@@ -42,7 +42,7 @@ jobs:
           
       - name: OpenAPI Extract Python Template
         run: |
-          java -jar  penapi-generator-cli.jar author template \
+          java -jar openapi-generator-cli.jar author template \
             -g python \
             -o templates/python
 
@@ -50,7 +50,7 @@ jobs:
         run: |
           patch -p1 /tmp/templates/python/api_client.mustache < $CI_PROJECT_DIR/patch/api_client.mustache.patch
           
-      - name: OpenAPI Extract Python Template
+      - name: OpenAPI Generate
         run: |
           java -jar openapi-generator-cli.jar generate \
             -i api-docs.yml \
