@@ -21,6 +21,7 @@ jobs:
 
       - name: Switch to or Create Branch
         run: |
+<<<<<<< HEAD
           git fetch origin openapi-autogent || true
           git checkout -b openapi-autogent origin/openapi-autogent || git checkout -b openapi-autogent
 
@@ -33,6 +34,15 @@ jobs:
             git checkout openapi-autogent
             git rebase main
           fi
+=======
+          BRANCH=openapi-autogen
+          git fetch --all
+          git reset --mixed origin/$BRANCH
+          git add .
+          git commit -m "a new openapi-autogen"
+          git push origin HEAD:$BRANCH
+          
+>>>>>>> parent of 9c55bb9 (name)
 
       - uses: actions/setup-java@v4
         with:
