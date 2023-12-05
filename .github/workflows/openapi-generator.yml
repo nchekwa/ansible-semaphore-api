@@ -141,6 +141,7 @@ jobs:
   ### TEST ######################################################
   test:
     runs-on: ubuntu-latest
+    if:  ${{ needs.generate_openapi.outputs.github_changes == 'true' }}
     env:
       GITHUB_BUILD: "false"
     strategy:
