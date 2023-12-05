@@ -23,10 +23,10 @@ jobs:
 
       - name: Overwrite OpenAPI Autogen with Main
         run: |
+          rm -R .
           git config --global user.email "autogen@nchekwa.com"
           git config --global user.name "OpenAPI Autogen"
           git config --global pull.rebase true
-          git rebase
           git pull origin main
           git checkout -B openapi-autogen
           git push --force-with-lease origin openapi-autogen
