@@ -17,7 +17,7 @@ jobs:
       
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Switch to or Create Branch
         run: |
@@ -33,6 +33,11 @@ jobs:
             git checkout openapi-autogent
             git rebase main
           fi
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: 'openapi-autogent'
 
       - uses: actions/setup-java@v4
         with:
@@ -122,4 +127,4 @@ jobs:
           git add --all
           git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"
           #git push -f origin main
-          git push
+          git push -f
