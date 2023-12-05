@@ -17,7 +17,7 @@ jobs:
       
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: 'main'
 
@@ -30,12 +30,14 @@ jobs:
         run: |
           if git show-ref --quiet refs/heads/openapi-autogen; then
               git branch -D openapi-autogen
+              echo "Delete openapi-autogen"
           fi
 
       - name: Recreate openapi-autogen based on main
         run: |
           git checkout main
           git checkout -b openapi-autogen
+          sleep 15
 
       - name: Switch to openapi-autogen branch
         run: |
@@ -43,7 +45,7 @@ jobs:
 
           
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: 'openapi-autogen'
 
