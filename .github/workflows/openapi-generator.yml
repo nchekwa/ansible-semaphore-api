@@ -21,13 +21,11 @@ jobs:
         with:
           ref: 'main'
 
-      - name: Switch to or Create Branch
+      - name: Overwrite OpenAPI Autogen with Main
         run: |
-          git config --global user.email "autogen@nchekwa.com"
-          git config --global user.name "OpenAPI Autogen"
           git pull origin main
           git checkout -B openapi-autogen
-          git push origin openapi-autogen
+          git push --force-with-lease origin openapi-autogen
           
       - name: Checkout code
         uses: actions/checkout@v2
