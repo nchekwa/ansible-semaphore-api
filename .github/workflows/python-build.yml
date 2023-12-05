@@ -1,0 +1,73 @@
+name: Python PyPi
+
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      config-path:
+        required: false
+        type: string
+
+jobs:
+  build:
+    name: Build PyPi
+    environment: production
+    runs-on: ubuntu-latest
+    env:
+      GIT_PUSH: "false"
+      PYPI_NAME: ${{ vars.PYPI_NAME }}
+      PYPI_VERSION: ${{ vars.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ vars.SEMAPHORE_VERSION }}
+    
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+    
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -U setuptools wheel build
+
+      - name: Cleanup dist/ folder before build
+        run: rm -rf dist/
+
+      - name: Build package
+        run: |
+          formatted_requirements=$(sed 's/.*/"&"/; $!s/$/, /' requirements.txt | tr -d '\n')
+          sed -i.bak "s/__inject_requirements__/${formatted_requirements}/" setup.py
+          python -m build
+
+      - name: Count generated files in dist/ folder
+        id: file_count
+        run: |
+            echo "GIT_PUSH=false" >> $GITHUB_ENV
+            FILE_COUNT=$(ls -1 $CI_PROJECT_DIR/dist/ | wc -l)
+            echo "Number of files in dist folder: $FILE_COUNT"
+            if [ $((FILE_COUNT)) -gt 0 ]; then
+              echo "New dist/ file generated."
+              ls -l $CI_PROJECT_DIR/dist
+              echo "GIT_PUSH=true" >> $GITHUB_ENV
+            else
+              echo "No new files generated."
+            fi
+
+      - name: Commit changes
+        if: env.GIT_PUSH == 'true'
+        run: |
+            git config --local user.name actions-user
+            git config --local user.email "github@nchekwa.com"
+            git status
+            git add dist/*
+            git commit -am "GitHub Actions PyPi Update $(date +"%Y-%m-%d %H:%M:%S")"
+            git push -f 
