@@ -20,13 +20,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: 'openapi-autogent'
+          fetch-depth: 0
       
       - name: Rebase from main if branch 
         run: |
-          git checkout main
-          git pull origin main
-          git checkout openapi-autogent
-          git rebase main
+          BRANCH=openapi-autogent
+          git fetch --all
+          git reset --mixed origin/$BRANCH
+          git add .
+          git commit -m "a new openapi-autogent"
+          git push origin HEAD:$BRANCH
+          
 
       - uses: actions/setup-java@v4
         with:
