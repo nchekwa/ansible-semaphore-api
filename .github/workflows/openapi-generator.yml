@@ -19,10 +19,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: 'main'
+          ref: 'openapi-autogen'
 
       - name: Overwrite OpenAPI Autogen with Main
         run: |
+          git config --global user.email "autogen@nchekwa.com"
+          git config --global user.name "OpenAPI Autogen"
           git pull origin main
           git checkout -B openapi-autogen
           git push --force-with-lease origin openapi-autogen
