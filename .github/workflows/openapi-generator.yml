@@ -126,7 +126,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: generate_openapi
-    if:  ${{ needs.generate_openapi.outputs.github_changes == 'true' }}
+    #if:  ${{ needs.generate_openapi.outputs.github_changes == 'true' }}
     env:
       GITHUB_BUILD: "false"
     strategy:
