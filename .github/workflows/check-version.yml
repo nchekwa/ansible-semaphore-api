@@ -19,7 +19,11 @@ jobs:
       - name: Get current date
         id: date
         run: echo "$(date +'%Y-%m-%d %H:%M:%S')"
-        
+      
+      - name: Print PyPi Version if it is set hardcoded in repo
+        if: env.PYPI_VERSION != ''
+        run: echo $PYPI_VERSION
+
       - name: Checkout branch "master"
         uses: actions/checkout@v4
         with:
