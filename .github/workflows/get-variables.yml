@@ -7,7 +7,7 @@ on:
     inputs:
       variable-file:
         description: "File name with variables"
-        required: false
+        required: true
         type: string
         default: "variable.env"
 
@@ -32,7 +32,7 @@ jobs:
     - name: Read .env file and set variable and output
       id: read-variable-env-file
       run: |
-        cat ${{ inputs.config-path }} >> "$GITHUB_ENV"
+        cat ${{ inputs.variable-file }} >> "$GITHUB_ENV"
         echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
     
     outputs:
