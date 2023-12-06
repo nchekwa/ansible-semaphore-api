@@ -1,4 +1,4 @@
-name: OpenAPI Generator
+name: Get Global Variables
 
 on:
   workflow_dispatch:
@@ -8,6 +8,16 @@ on:
         description: "File name with variables"
         required: false
         type: string
+    outputs:
+      PYPI_NAME:
+        description: "PyPi module name"
+        value: ${{ jobs.read_variables.outputs.PYPI_NAME }}
+      PYPI_VERSION:
+        description: "PyPi version which we going to build"
+        value: ${{ jobs.read_variables.outputs.PYPI_VERSION }}
+      SEMAPHORE_VERSION:
+        description: "Ansible Semaphore API Version which we check"
+        value: ${{ jobs.read_variables.outputs.SEMAPHORE_VERSION }}
 
 jobs:
   read_variables:
@@ -24,4 +34,3 @@ jobs:
       PYPI_NAME: ${{ env.PYPI_NAME }}
       PYPI_VERSION: ${{ env.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
-      CI_PROJECT_DIR: ${{ env.GITHUB_WORKSPACE }}

@@ -21,7 +21,7 @@ jobs:
   read_variables:
     uses: ./.github/workflows/get-variables.yml
     secrets: inherit
-    
+
 
   ### Generate OpenAPI ######################################################
   generate_openapi:
@@ -30,9 +30,9 @@ jobs:
     needs: read_variables
     env:
       GIT_PUSH: "false"
-      PYPI_NAME: ${{ jobs.read_variables.outputs.PYPI_NAME }}
-      PYPI_VERSION: ${{ jobs.read_variables.outputs.PYPI_VERSION }}
-      SEMAPHORE_VERSION: ${{ jobs.read_variables.outputs.SEMAPHORE_VERSION }}
+      PYPI_NAME: ${{ needs.read_variables.outputs.PYPI_NAME }}
+      PYPI_VERSION: ${{ needs.read_variables.outputs.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ needs.read_variables.outputs.SEMAPHORE_VERSION }}
 
     steps:
       - name: Checkout code
