@@ -10,12 +10,7 @@ on:
       - 'variable.env'
       - '.github/workflows/openapi-generator.yml'
 
-permissions:
-  pull-requests: write
-  deployments: write
-  contents: write
-  checks: read
-  actions: write
+
 
 jobs:
   read-variables:
@@ -35,7 +30,11 @@ jobs:
       PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
       PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
-
+    permissions:
+      contents: write
+      checks: read
+      actions: write
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
