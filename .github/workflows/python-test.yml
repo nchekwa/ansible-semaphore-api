@@ -1,12 +1,10 @@
 name: Python Testing
-run-name: PyTest
+run-name: PyTest and Flake8
 
 on:
+  workflow_dispatch:
   workflow_call:
-    inputs:
-      config-path:
-        required: false
-        type: string
+
 
 jobs:
   read-variables:
