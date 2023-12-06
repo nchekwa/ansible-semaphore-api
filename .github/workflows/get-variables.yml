@@ -1,4 +1,5 @@
 name: Get Global Variables
+run-name: Variables
 
 on:
   workflow_dispatch:
@@ -8,28 +9,32 @@ on:
         description: "File name with variables"
         required: false
         type: string
+        default: "variable.env"
+
     outputs:
       PYPI_NAME:
         description: "PyPi module name"
-        value: ${{ jobs.read_variables.outputs.PYPI_NAME }}
+        value: ${{ jobs.vars.outputs.PYPI_NAME }}
       PYPI_VERSION:
         description: "PyPi version which we going to build"
-        value: ${{ jobs.read_variables.outputs.PYPI_VERSION }}
+        value: ${{ jobs.vars.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION:
         description: "Ansible Semaphore API Version which we check"
-        value: ${{ jobs.read_variables.outputs.SEMAPHORE_VERSION }}
+        value: ${{ jobs.vars.outputs.SEMAPHORE_VERSION }}
 
 jobs:
-  read_variables:
+  get:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Read variable.env and set variable
-      id: read-variable-env
+    
+    - name: Read .env file and set variable and output
+      id: read-variable-env-file
       run: |
-        cat variable.env >> "$GITHUB_ENV"
+        cat ${{ inputs.config-path }} >> "$GITHUB_ENV"
         echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+    
     outputs:
       PYPI_NAME: ${{ env.PYPI_NAME }}
       PYPI_VERSION: ${{ env.PYPI_VERSION }}
