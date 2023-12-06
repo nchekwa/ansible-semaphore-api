@@ -8,7 +8,7 @@ on:
       
 jobs:
   check-semui-version:
-    name: "Check Latest Ansible Semaphor Version"
+    name: "Version Check Job"
     runs-on: ubuntu-latest
     environment: production
     env:
