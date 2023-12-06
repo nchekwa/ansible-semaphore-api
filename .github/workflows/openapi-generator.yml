@@ -17,22 +17,22 @@ permissions:
   checks: read
 
 jobs:
-  read_variables:
+  read-variables:
     name: "Get Variables"
     uses: ./.github/workflows/get-variables.yml
     secrets: inherit
 
   ### Generate OpenAPI ######################################################
-  generate_openapi:
+  generate-openapi:
     name: "OpenAPI"
     environment: staging
     runs-on: ubuntu-latest
-    needs: read_variables
+    needs: read-variables
     env:
       GIT_PUSH: "false"
-      PYPI_NAME: ${{ needs.read_variables.outputs.PYPI_NAME }}
-      PYPI_VERSION: ${{ needs.read_variables.outputs.PYPI_VERSION }}
-      SEMAPHORE_VERSION: ${{ needs.read_variables.outputs.SEMAPHORE_VERSION }}
+      PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
+      PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
 
     steps:
       - name: Checkout code
@@ -122,9 +122,16 @@ jobs:
       GIT_PUSH: ${{ env.GIT_PUSH }}
 
 
-  call-workflow-test:
+  call-workflow-python-test:
+    name: "Python PyTest"
     uses: ./.github/workflows/python-test.yml
     secrets: inherit
-    needs: generate_openapi
+    needs: generate-openapi
     #if:  needs.generate_openapi.outputs.GIT_PUSH == 'true'
 
+  call-workflow-test:
+    name: "Python PyPi Build"
+    uses: ./.github/workflows/python-pypi-build.yml
+    secrets: inherit
+    needs: call-workflow-python-test
+    #if:  needs.generate_openapi.outputs.GIT_PUSH == 'true'
