@@ -1,0 +1,27 @@
+name: OpenAPI Generator
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      variable-file:
+        description: "File name with variables"
+        required: false
+        type: string
+
+jobs:
+  read_variables:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Read variable.env and set variable
+      id: read-variable-env
+      run: |
+        cat variable.env >> "$GITHUB_ENV"
+        echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+    outputs:
+      PYPI_NAME: ${{ env.PYPI_NAME }}
+      PYPI_VERSION: ${{ env.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
+      CI_PROJECT_DIR: ${{ env.GITHUB_WORKSPACE }}
