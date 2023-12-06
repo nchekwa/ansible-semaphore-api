@@ -59,21 +59,24 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       with:
         tag_name: v${{env.PYPI_VERSION}}
-        release_name: Release v${{env.PYPI_VERSION}}
+        release_name: v${{env.PYPI_VERSION}}
         body: |
           Changes in this Release
           - Ref to Ansible-Semaphore Release Notes [v${{env.PYPI_VERSION}}](https://github.com/ansible-semaphore/semaphore/releases/tag/v${{env.PYPI_VERSION}})
         draft: false
         prerelease: false
 
+    - name: Print Github Release
+      run: |
+        echo "ID: ${{ steps.create_release.outputs.id }}"
+
     - name: Publish distribution 📦 to Github Release v${{env.PYPI_VERSION}}
       uses: xresloader/upload-to-github-release@main
-
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         file: "dist/*"
         release_id: ${{ steps.create_release.outputs.id }}
         overwrite: true
-        verbose: true
+        #verbose: true
   
