@@ -1,5 +1,5 @@
-name: Check semui version
-run-name: Version Check
+name: Semaphore Check Version
+run-name: Auto Version Check
 
 on:
   workflow_dispatch:
