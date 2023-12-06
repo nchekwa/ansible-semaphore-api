@@ -3,6 +3,12 @@ run-name: Variables
 
 on:
   workflow_dispatch:
+    inputs:
+      file:
+        description: "File name with variables"
+        required: false
+        type: string
+        default: "variable.env"
   workflow_call:
     inputs:
       file:
@@ -10,7 +16,6 @@ on:
         required: false
         type: string
         default: "variable.env"
-
     outputs:
       PYPI_NAME:
         description: "PyPi module name"
