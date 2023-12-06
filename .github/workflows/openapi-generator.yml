@@ -15,6 +15,7 @@ permissions:
   deployments: write
   contents: write
   checks: read
+  actions: write
 
 jobs:
   read-variables:
