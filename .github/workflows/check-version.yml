@@ -15,7 +15,7 @@ jobs:
     name: Tag
     runs-on: ubuntu-latest
     env:
-      GITHUB_CHANGES: "false"
+      GIT_PUSH: "false"
     
     steps:
       - name: Get current date
@@ -42,13 +42,13 @@ jobs:
 
       - name: Compare versions
         run: |
-          echo "GITHUB_CHANGES=false" >> $GITHUB_ENV
+          echo "GIT_PUSH=false" >> $GITHUB_ENV
           if [ "$PAGE_SEMAPHORE_VERSION" != "$SEMAPHORE_VERSION" ]; then
             echo "Versions are different. Updating SEMAPHORE."
             echo "PYPI_NAME=semaphore_api" > variable.env
             echo "SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
             echo "PYPI_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
-            echo "GITHUB_CHANGES=true" >> $GITHUB_ENV
+            echo "GIT_PUSH=true" >> $GITHUB_ENV
           else
             echo "Versions are the same. No update needed."
             exit 0
@@ -63,7 +63,7 @@ jobs:
         shell: bash
 
       - name: Commit changes
-        if: env.GITHUB_CHANGES == 'true'
+        if: env.GIT_PUSH == 'true'
         run: |
           git config --local user.name actions-user
           git config --local user.email "github@nchekwa.com"
