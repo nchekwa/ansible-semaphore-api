@@ -19,13 +19,13 @@ on:
     outputs:
       PYPI_NAME:
         description: "PyPi module name"
-        value: ${{ jobs.vars.outputs.PYPI_NAME }}
+        value: ${{ jobs.get.outputs.PYPI_NAME }}
       PYPI_VERSION:
         description: "PyPi version which we going to build"
-        value: ${{ jobs.vars.outputs.PYPI_VERSION }}
+        value: ${{ jobs.get.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION:
         description: "Ansible Semaphore API Version which we check"
-        value: ${{ jobs.vars.outputs.SEMAPHORE_VERSION }}
+        value: ${{ jobs.get.outputs.SEMAPHORE_VERSION }}
 
 jobs:
   get:
