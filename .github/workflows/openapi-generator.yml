@@ -132,9 +132,16 @@ jobs:
     needs: generate-openapi
     #if:  needs.generate_openapi.outputs.GIT_PUSH == 'true'
 
-  call-workflow-test:
+  call-workflow-pypi-build:
     name: "Python PyPi Build"
     uses: ./.github/workflows/python-pypi-build.yml
     secrets: inherit
     needs: call-workflow-python-test
-    #if:  needs.generate_openapi.outputs.GIT_PUSH == 'true'
+    #if:  needs.call-workflow-python-test.outputs.GIT_PUSH == 'true'
+
+  call-workflow-pypi-publish:
+    name: "Python PyPi Publish"
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
+    needs: call-workflow-pypi-build
+    #if:  needs.call-workflow-pypi-build.outputs.GIT_PUSH == 'true'

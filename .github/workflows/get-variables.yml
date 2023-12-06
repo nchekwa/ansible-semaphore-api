@@ -1,4 +1,4 @@
-name: Read File Variables
+name: Read Variables File
 run-name: Variables
 
 on:

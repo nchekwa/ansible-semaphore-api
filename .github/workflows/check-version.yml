@@ -10,7 +10,7 @@ jobs:
   check-semui-version:
     name: "Version Check Job"
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     env:
       GIT_PUSH: "false"
       PYPI_VERSION: ${{ vars.PYPI_VERSION }}
