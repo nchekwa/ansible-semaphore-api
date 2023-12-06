@@ -1,5 +1,5 @@
 name: Get Global Variables
-run-name: Variables
+#run-name: Variables
 
 on:
   workflow_dispatch:
