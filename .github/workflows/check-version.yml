@@ -1,21 +1,19 @@
-name: Check version
+name: Check semui version
 
 on:
   workflow_dispatch:
   schedule:
     - cron: '30 3 * * *'
-  #push:
-  #  branches:
-  #    - main
-  #  paths:
-  #    - '.github/workflows/check-version.yml'
       
 jobs:
-  tag:
-    name: Tag
+  check-semui-version:
+    name: "Check Latest Ansible Semaphor Version"
     runs-on: ubuntu-latest
+    environment: production
     env:
       GIT_PUSH: "false"
+      PYPI_VERSION: ${{ vars.PYPI_VERSION }}
+      ENV_FILENAME: "variable.env"
     
     steps:
       - name: Get current date
@@ -34,20 +32,25 @@ jobs:
           echo "PAGE_SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> "$GITHUB_ENV"
         shell: bash
 
-      - name: Read variable.env and set env variable
+      - name: Read .env file and set env variable
         id: read-version
         run: |
-          cat variable.env
-          cat variable.env >> "$GITHUB_ENV"
+          cat $ENV_FILENAME
+          cat $ENV_FILENAME >> "$GITHUB_ENV"
 
       - name: Compare versions
         run: |
           echo "GIT_PUSH=false" >> $GITHUB_ENV
           if [ "$PAGE_SEMAPHORE_VERSION" != "$SEMAPHORE_VERSION" ]; then
             echo "Versions are different. Updating SEMAPHORE."
-            echo "PYPI_NAME=semaphore_api" > variable.env
-            echo "SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
-            echo "PYPI_VERSION=$PAGE_SEMAPHORE_VERSION" >> variable.env
+            sed -i "s/^SEMAPHORE_VERSION=.*/SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION/g" $ENV_FILENAME
+            if [ -z "$PYPI_VERSION" ]; then
+              echo "Variable PYPI_VERSION is not hardcoded. Set value same as Ansible Semaphore Version."
+              sed -i "s/^PYPI_VERSION=.*/PYPI_VERSION=$SEMAPHORE_VERSION/g" $ENV_FILENAME
+            else
+              echo "Variable PYPI_VERSION is not empty. Set value from variables."
+              sed -i "s/^PYPI_VERSION=.*/PYPI_VERSION=$PYPI_VERSION/g" $ENV_FILENAME
+            fi
             echo "GIT_PUSH=true" >> $GITHUB_ENV
           else
             echo "Versions are the same. No update needed."
@@ -57,9 +60,9 @@ jobs:
           echo "Final SEMAPHORE set: $PAGE_SEMAPHORE_VERSION"
         shell: bash
     
-      - name: Print new file version
+      - name: Print new .env file version
         run: |      
-         cat variable.env
+         cat $ENV_FILENAME
         shell: bash
 
       - name: Commit changes
@@ -72,4 +75,7 @@ jobs:
           git commit -am "GitHub Actions Check Version Update $(date +"%Y-%m-%d %H:%M:%S")"
           git push -f origin main
 
-
+    outputs:
+      PYPI_NAME: ${{ env.PYPI_NAME }}
+      PYPI_VERSION: ${{ env.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}

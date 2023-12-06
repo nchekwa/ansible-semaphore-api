@@ -31,6 +31,7 @@ jobs:
     needs: read-variables
     env:
       GIT_PUSH: "false"
+      OPENAPI_VERSION: "7.1.2"
       PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
       PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
@@ -46,12 +47,12 @@ jobs:
 
       - name: Set up OpenAPI Generator
         run: |
-          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O /tmp/openapi-generator-cli.jar
+          wget -q https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/$(OPENAPI_VERSION)/openapi-generator-cli-$(OPENAPI_VERSION).jar -O /tmp/openapi-generator-cli.jar
 
       - name: OpenAPI Download Ansible Semaphore API-Docs
         run: |
           cd /tmp/
-          curl "https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o api-docs.yml
+          curl -s s"https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o api-docs.yml
           
       - name: OpenAPI Extract Python Template
         run: |
@@ -118,10 +119,11 @@ jobs:
           git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"s
           git push -f
 
-
     outputs:
       GIT_PUSH: ${{ env.GIT_PUSH }}
-
+      PYPI_NAME: ${{ env.PYPI_NAME }}
+      PYPI_VERSION: ${{ env.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
 
   call-workflow-python-test:
     name: "Python PyTest"

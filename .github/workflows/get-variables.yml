@@ -1,5 +1,5 @@
-name: Get Global Variables
-#run-name: Variables
+name: Read File Variables
+run-name: Variables
 
 on:
   workflow_dispatch:
@@ -19,17 +19,23 @@ on:
     outputs:
       PYPI_NAME:
         description: "PyPi module name"
-        value: ${{ jobs.get.outputs.PYPI_NAME }}
+        value: ${{ jobs.get-variables.outputs.PYPI_NAME }}
       PYPI_VERSION:
         description: "PyPi version which we going to build"
-        value: ${{ jobs.get.outputs.PYPI_VERSION }}
+        value: ${{ jobs.get-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION:
         description: "Ansible Semaphore API Version which we check"
-        value: ${{ jobs.get.outputs.SEMAPHORE_VERSION }}
+        value: ${{ jobs.get-variables.outputs.SEMAPHORE_VERSION }}
 
 jobs:
-  get:
+  get-variables:
+    name: "Get variables"
     runs-on: ubuntu-latest
+    env:
+      PYPI_NAME: 
+      PYPI_VERSION:
+      SEMAPHORE_VERSION:
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
