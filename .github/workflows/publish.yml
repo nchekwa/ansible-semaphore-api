@@ -39,6 +39,7 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
     
     - name: Create Github Tag
+      if: 2 == 3
       uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -57,22 +58,22 @@ jobs:
         # secrets.GITHUB_TOKEN - This token is provided by Actions, you do not need to create your own token
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       with:
-        tag_name: v$(PYPI_VERSION)
-        release_name: Release v$(PYPI_VERSION)
+        tag_name: v${{env.PYPI_VERSION}}
+        release_name: Release v${{env.PYPI_VERSION}}
         body: |
           Changes in this Release
-          - Ref to Ansible-Semaphore Release Notes [v$(PYPI_VERSION)](https://github.com/ansible-semaphore/semaphore/releases/tag/v$(PYPI_VERSION))
+          - Ref to Ansible-Semaphore Release Notes [v${{env.PYPI_VERSION}}](https://github.com/ansible-semaphore/semaphore/releases/tag/v${{env.PYPI_VERSION}})
         draft: false
         prerelease: false
 
-    - name: Publish distribution 📦 to Github Release v$(PYPI_VERSION)
+    - name: Publish distribution 📦 to Github Release v${{env.PYPI_VERSION}}
       uses: xresloader/upload-to-github-release@main
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         file: "dist/*"
-        release_id: v$(PYPI_VERSION)
+        release_id: v${{env.PYPI_VERSION}}
         overwrite: true
         verbose: true
   
