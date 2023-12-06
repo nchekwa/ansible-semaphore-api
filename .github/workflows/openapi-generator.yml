@@ -30,9 +30,9 @@ jobs:
         cat variable.env >> "$GITHUB_ENV"
         echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
     outputs:
-      PYPI_NAME: ${{ steps.read-variable-env.outputs.PYPI_NAME }}
-      PYPI_VERSION: ${{ steps.read-variable-env.outputs.PYPI_VERSION }}
-      SEMAPHORE_VERSION: ${{ steps.read-variable-env.outputs.SEMAPHORE_VERSION }}
+      PYPI_NAME: ${{ env.PYPI_NAME }}
+      PYPI_VERSION: ${{ env.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
 
 
   ### Generate OpenAPI ######################################################
@@ -137,3 +137,5 @@ jobs:
   call-workflow-test:
     uses: ./.github/workflows/python-test.yml
     secrets: inherit
+    needs: generate_openapi
+    #if:  needs.generate_openapi.outputs.GIT_PUSH == 'true'
