@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   workflow_call:
     inputs:
-      variable-file:
+      file:
         description: "File name with variables"
         required: false
         type: string
@@ -32,8 +32,8 @@ jobs:
     - name: Read .env file and set variable and output
       id: read-variable-env-file
       run: |
-        cat ${{ inputs.variable-file }} >> "$GITHUB_ENV"
-        echo "CI_PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+        cat ${{ inputs.file }} 
+        cat ${{ inputs.file }} >> "$GITHUB_ENV"
     
     outputs:
       PYPI_NAME: ${{ env.PYPI_NAME }}
