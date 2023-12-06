@@ -31,7 +31,7 @@ jobs:
     needs: read-variables
     env:
       GIT_PUSH: "false"
-      OPENAPI_VERSION: "7.1.2"
+      OPENAPI_VERSION: "7.1.0"
       PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
       PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
