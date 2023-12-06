@@ -1,4 +1,4 @@
-name: Python PyPi Publish
+name: Publish
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   publish:
-    name: Publish PyPi and Github
+    name: Publish PyPi and Github Release
     environment: production
     runs-on: ubuntu-latest
     env:
@@ -59,22 +59,22 @@ jobs:
         # secrets.GITHUB_TOKEN - This token is provided by Actions, you do not need to create your own token
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: v$PYPI_VERSION
+        release_name: Release v$PYPI_VERSION
         body: |
           Changes in this Release
-          - Ref to Ansible-Semaphore Release Notes [v${{ github.ref }}](https://github.com/ansible-semaphore/semaphore/releases/tag/v${{ github.ref }})
+          - Ref to Ansible-Semaphore Release Notes [v$PYPI_VERSION](https://github.com/ansible-semaphore/semaphore/releases/tag/v$PYPI_VERSION)
         draft: false
         prerelease: false
 
-    - name: Publish distribution 📦 to Github Release ${{ github.ref }}
+    - name: Publish distribution 📦 to Github Release v$PYPI_VERSION
       uses: xresloader/upload-to-github-release@main
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         file: "dist/*"
-        release_id: ${{ steps.create_release.outputs.id }}
+        release_id: v$PYPI_VERSION
         overwrite: true
         verbose: true
   
