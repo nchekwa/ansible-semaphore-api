@@ -22,6 +22,8 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     - name: Read variable.env and set variable
       id: read-variable-env
       run: |
