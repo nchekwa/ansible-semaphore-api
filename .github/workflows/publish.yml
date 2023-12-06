@@ -73,7 +73,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         file: "dist/*"
-        release_id: v${{env.PYPI_VERSION}}
+        release_id: ${{ steps.create_release.outputs.id }}
         overwrite: true
         verbose: true
   
