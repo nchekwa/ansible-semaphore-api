@@ -133,12 +133,13 @@ jobs:
       PYPI_NAME: ${{ env.PYPI_NAME }}
       PYPI_VERSION: ${{ env.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
+      FORCE_RUN: ${{ env.FORCE_RUN }}
 
   # Jobs:
   call-workflow-python-test:
     name: "Python PyTest"
     needs: generate-openapi
-    if:  needs.generate_openapi.outputs.GIT_PUSH == 'true' || env.FORCE_RUN == 'true'
+    if:  needs.generate_openapi.outputs.GIT_PUSH == 'true' || inputs.forceRun == 'true'
     uses: ./.github/workflows/python-test.yml
     secrets: inherit
 
@@ -146,7 +147,7 @@ jobs:
   call-workflow-pypi-build:
     name: "Python PyPi Build"
     needs: call-workflow-python-test
-    if:  needs.call-workflow-python-test.outputs.TEST_STATUS == 'ok' || env.FORCE_RUN == 'true'
+    if:  needs.call-workflow-python-test.outputs.TEST_STATUS == 'ok' || inputs.forceRun == 'true'
     uses: ./.github/workflows/python-pypi-build.yml
     secrets: inherit
 
@@ -154,6 +155,6 @@ jobs:
   call-workflow-pypi-publish:
     name: "Publisher"
     needs: call-workflow-pypi-build
-    if:  needs.call-workflow-pypi-build.outputs.GIT_PUSH == 'true' || env.FORCE_RUN == 'true'
+    if:  needs.call-workflow-pypi-build.outputs.GIT_PUSH == 'true' || inputs.forceRun == 'true'
     uses: ./.github/workflows/publish.yml
     secrets: inherit
