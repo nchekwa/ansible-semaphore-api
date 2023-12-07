@@ -1,6 +1,6 @@
 # ansible-semaphore-api
+[![Semaphore Check Version](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/check-version.yml/badge.svg)](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/check-version.yml)
 [![OpenAPI](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/openapi-generator.yml/badge.svg)](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/openapi-generator.yml)
-[![Python PyPi](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/python-pypi.yml/badge.svg)](https://github.com/nchekwa/ansible-semaphore-api/actions/workflows/python-pypi.yml)
 
 [Ansible Semaphore](https://www.ansible-semaphore.com/) Python API Lib <br> 
 
