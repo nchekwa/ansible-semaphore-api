@@ -5,7 +5,6 @@ on:
   workflow_dispatch:
   workflow_call:
 
-
 jobs:
   read-variables:
     name: "Get Variables"
@@ -22,7 +21,7 @@ jobs:
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
     env:
-      GIT_PUSH: "false"
+      TEST_STATUS: 'nok'
       PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
       PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
@@ -54,3 +53,8 @@ jobs:
       run: |
         pytest --cov=$PYPI_NAME
 
+    - name: Final, set Test Status = OK
+      run: echo "TEST_STATUS=ok" >> $GITHUB_ENV
+
+    outputs:
+      TEST_STATUS: ${{ env.TEST_STATUS }}

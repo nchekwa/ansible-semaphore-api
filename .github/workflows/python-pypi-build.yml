@@ -4,10 +4,6 @@ run-name: PyPi Build
 on:
   workflow_dispatch:
   workflow_call:
-    inputs:
-      config-path:
-        required: false
-        type: string
 
 jobs:
   read-variables:
@@ -21,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: read-variables
     env:
-      GIT_PUSH: "false"
+      PYPI_NEW_DIST: 'false'
       PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
       PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
@@ -57,29 +53,28 @@ jobs:
       - name: Count generated files in dist/ folder
         id: file_count
         run: |
-            echo "GIT_PUSH=false" >> $GITHUB_ENV
             FILE_COUNT=$(ls -1 $GITHUB_WORKSPACE/dist/ | wc -l)
             echo "Number of files in dist folder: $FILE_COUNT"
             if [ $((FILE_COUNT)) -gt 0 ]; then
               echo "New dist/ file generated."
               ls -l $GITHUB_WORKSPACE/dist
-              echo "GIT_PUSH=true" >> $GITHUB_ENV
+              echo "PYPI_NEW_DIST=true" >> $GITHUB_ENV
             else
               echo "No new files generated."
             fi
 
       - name: Commit changes
-        if: env.GIT_PUSH == 'true'
+        if: env.PYPI_NEW_DIST == 'true'
         run: |
             git config --local user.name actions-user
             git config --local user.email "github@nchekwa.com"
             git status
             git add dist/*
-            git commit -am "GitHub Actions PyPi Update $(date +"%Y-%m-%d %H:%M:%S")"
+            git commit -am "GitHub Actions PyPi Builder $(date +"%Y-%m-%d %H:%M:%S")"
             git push -f 
     
     outputs:
-      GIT_PUSH: ${{ env.GIT_PUSH }}
+      PYPI_NEW_DIST: ${{ env.PYPI_NEW_DIST }}
       PYPI_NAME: ${{ env.PYPI_NAME }}
       PYPI_VERSION: ${{ env.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
