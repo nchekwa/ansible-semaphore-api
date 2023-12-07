@@ -1,0 +1,52 @@
+name: Read Variables File
+run-name: Variables
+
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "File name with variables"
+        required: false
+        type: string
+        default: "variable.env"
+  workflow_call:
+    inputs:
+      file:
+        description: "File name with variables"
+        required: false
+        type: string
+        default: "variable.env"
+    outputs:
+      PYPI_NAME:
+        description: "PyPi module name"
+        value: ${{ jobs.get-variables.outputs.PYPI_NAME }}
+      PYPI_VERSION:
+        description: "PyPi version which we going to build"
+        value: ${{ jobs.get-variables.outputs.PYPI_VERSION }}
+      SEMAPHORE_VERSION:
+        description: "Ansible Semaphore API Version which we check"
+        value: ${{ jobs.get-variables.outputs.SEMAPHORE_VERSION }}
+
+jobs:
+  get-variables:
+    name: "Get variables"
+    runs-on: ubuntu-latest
+    env:
+      PYPI_NAME: 
+      PYPI_VERSION:
+      SEMAPHORE_VERSION:
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Read .env file and set variable and output
+      id: read-variable-env-file
+      run: |
+        cat ${{ inputs.file }} 
+        cat ${{ inputs.file }} >> "$GITHUB_ENV"
+    
+    outputs:
+      PYPI_NAME: ${{ env.PYPI_NAME }}
+      PYPI_VERSION: ${{ env.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}

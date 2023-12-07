@@ -1,0 +1,71 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  read-variables:
+    name: "Get Variables"
+    uses: ./.github/workflows/get-variables.yml
+    secrets: inherit
+
+  publish:
+    name: Publish PyPi and Github Release
+    environment: production
+    needs: read-variables
+    runs-on: ubuntu-latest
+    env:
+      PYPI_PUBLISH: ${{ vars.PYPI_PUBLISH }}
+      PYPI_VERSION: ${{ vars.PYPI_VERSION || needs.read-variables.outputs.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ vars.SEMAPHORE_VERSION || needs.read-variables.outputs.SEMAPHORE_VERSION }}
+      
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+      id-token: write 
+       # IMPORTANT: (id-token) this permission is mandatory for trusted publishing
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Publish package
+      if: env.PYPI_PUBLISH == 'true'
+      uses: pypa/gh-action-pypi-publish@v1.8.11
+      with:
+        skip-existing: true
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+    
+    - name: Create Github Release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        # secrets.GITHUB_TOKEN - This token is provided by Actions, you do not need to create your own token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+      with:
+        tag_name: v${{env.PYPI_VERSION}}
+        release_name: v${{env.PYPI_VERSION}}
+        body: |
+          Changes in this Release
+          - Ref to Ansible-Semaphore Release Notes [v${{env.SEMAPHORE_VERSION}}](https://github.com/ansible-semaphore/semaphore/releases/tag/v${{env.SEMAPHORE_VERSION}})
+        draft: false
+        prerelease: false
+
+    - name: Print Github Release ID
+      run: |
+        echo "ID: ${{ steps.create_release.outputs.id }}"
+
+    - name: Publish distribution 📦 to Github
+      uses: xresloader/upload-to-github-release@main
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: "dist/*"
+        release_id: ${{ steps.create_release.outputs.id }}
+        overwrite: true
+        #verbose: true
+  
+    - name: All done ✅
+      run: echo "DONE $(date +'%Y-%m-%d %H:%M:%S')"

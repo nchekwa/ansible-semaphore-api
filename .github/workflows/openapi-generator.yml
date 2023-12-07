@@ -1,0 +1,160 @@
+name: OpenAPI Generator
+
+on:
+  workflow_dispatch:
+    inputs:
+      forceRun:
+        description: 'Force Run Option'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'variable.env'
+
+env:
+  FORCE_RUN: ${{ inputs.forceRun || 'false' }}
+
+jobs:
+  read-variables:
+    name: "Get Variables"
+    uses: ./.github/workflows/get-variables.yml
+    secrets: inherit
+
+  ### Generate OpenAPI ######################################################
+  generate-openapi:
+    name: "OpenAPI"
+    environment: staging
+    runs-on: ubuntu-latest
+    needs: read-variables
+    env:
+      GIT_PUSH: "false"
+      OPENAPI_VERSION: "7.1.0"
+      PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
+      PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
+
+    permissions:
+      contents: write
+      checks: read
+      actions: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up OpenAPI Generator
+        run: |
+          wget --quiet https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/$OPENAPI_VERSION/openapi-generator-cli-$OPENAPI_VERSION.jar -O /tmp/openapi-generator-cli.jar
+        
+      - name: OpenAPI Download Ansible Semaphore API-Docs
+        run: |
+          cd /tmp/
+          curl -s "https://converter.swagger.io/api/convert?url=https://raw.githubusercontent.com/ansible-semaphore/semaphore/v$SEMAPHORE_VERSION/api-docs.yml" -H "Accept: application/yaml" -o api-docs.yml
+          
+      - name: OpenAPI Extract Python Template
+        run: |
+          cd /tmp/ &&
+          java -jar /tmp/openapi-generator-cli.jar author template \
+            -g python \
+            -o templates/python
+
+      - name: Apply Patch on Python Template
+        run: |
+          patch -p1 /tmp/templates/python/api_client.mustache < $GITHUB_WORKSPACE/patch/api_client.mustache.patch
+          
+      - name: OpenAPI Generate
+        run: |
+          cd /tmp/ &&
+          java -jar /tmp/openapi-generator-cli.jar generate \
+            -i api-docs.yml \
+            -g python \
+            -t templates/python \
+            -o openapi \
+            --package-name $PYPI_NAME \
+            --git-repo-id {repo} \
+            --git-user-id {owner}
+        
+      - name: Update repository
+        run: |
+          cd $GITHUB_WORKSPACE
+          rm -fR $GITHUB_WORKSPACE/$PYPI_NAME && cp -r /tmp/openapi/$PYPI_NAME $GITHUB_WORKSPACE/
+          rm -fR $GITHUB_WORKSPACE/docs && cp -r /tmp/openapi/docs $GITHUB_WORKSPACE/
+          rm -fR $GITHUB_WORKSPACE/test && cp -r /tmp/openapi/test $GITHUB_WORKSPACE/
+          cp /tmp/openapi/README.md $GITHUB_WORKSPACE/README_OPENAPI.md
+          ls -la $GITHUB_WORKSPACE/
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          cd $GITHUB_WORKSPACE
+          echo "GIT_PUSH=false" >> $GITHUB_ENV
+          
+          if git status --porcelain | grep -q '^??'; then
+            echo "Git Status: Untracked files found. Adding them to the staging area."
+            echo "GIT_PUSH=true" >> $GITHUB_ENV
+          elif git status --porcelain | grep -q '^\s*D'; then
+            echo "Git Status: Deleted files found. Perform actions for deleted files."
+            echo "GIT_PUSH=true" >> $GITHUB_ENV
+          else
+            echo "Git Status: No untracked or deleted files."
+          fi
+
+          if ! git diff --quiet; then
+              echo "Git Files Diff: Changes detected in some files, proceeding with commit."
+              echo "GIT_PUSH=true" >> $GITHUB_ENV
+          else
+              echo "Git Files Diff: No differences found between the working directory and the staging area."      
+          fi
+
+      - name: Commit changes
+        if: env.GIT_PUSH == 'true'
+        run: |
+          git config --local user.name actions-user
+          git config --local user.email "github@nchekwa.com"
+          git status
+          git add --all
+          git commit -am "GitHub Actions OpenAPI Update $(date +"%Y-%m-%d %H:%M:%S")"s
+          git push -f
+
+    outputs:
+      GIT_PUSH: ${{ env.GIT_PUSH }}
+      PYPI_NAME: ${{ env.PYPI_NAME }}
+      PYPI_VERSION: ${{ env.PYPI_VERSION }}
+      SEMAPHORE_VERSION: ${{ env.SEMAPHORE_VERSION }}
+      FORCE_RUN: ${{ env.FORCE_RUN }}
+
+  # Jobs:
+  call-workflow-python-test:
+    name: "Python PyTest"
+    needs: generate-openapi
+    if:  needs.generate_openapi.outputs.GIT_PUSH == 'true' || inputs.forceRun == 'true'
+    uses: ./.github/workflows/python-test.yml
+    secrets: inherit
+
+
+  call-workflow-pypi-build:
+    name: "Python PyPi Build"
+    needs: call-workflow-python-test
+    if:  needs.call-workflow-python-test.outputs.TEST_STATUS == 'ok' || inputs.forceRun == 'true'
+    uses: ./.github/workflows/python-pypi-build.yml
+    secrets: inherit
+
+
+  call-workflow-pypi-publish:
+    name: "Publisher"
+    needs: call-workflow-pypi-build
+    if:  needs.call-workflow-pypi-build.outputs.GIT_PUSH == 'true' || inputs.forceRun == 'true'
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
