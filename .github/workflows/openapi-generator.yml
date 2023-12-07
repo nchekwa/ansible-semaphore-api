@@ -2,15 +2,22 @@ name: OpenAPI Generator
 
 on:
   workflow_dispatch:
+    inputs:
+      forceRun:
+        description: 'Force Run Option'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - true
+          - false
+
   push:
     branches:
       - main
       - dev
     paths:
       - 'variable.env'
-      - '.github/workflows/openapi-generator.yml'
-
-
 
 jobs:
   read-variables:
