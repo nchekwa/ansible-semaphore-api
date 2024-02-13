@@ -72,7 +72,14 @@ jobs:
             git add dist/*
             git commit -am "GitHub Actions PyPi Builder $(date +"%Y-%m-%d %H:%M:%S")"
             git push -f 
-    
+
+      - name: '⬆️ Upload artefact - dist folder'
+        uses: actions/upload-artifact@v3
+        with:
+          name: 'dist'
+          path: |
+            dist/
+
     outputs:
       PYPI_NEW_DIST: ${{ env.PYPI_NEW_DIST }}
       PYPI_NAME: ${{ env.PYPI_NAME }}
