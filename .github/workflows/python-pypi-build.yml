@@ -73,7 +73,7 @@ jobs:
             git commit -am "GitHub Actions PyPi Builder $(date +"%Y-%m-%d %H:%M:%S")"
             git push -f 
 
-      - name: '⬆️ Upload artefact - dist folder'
+      - name: '⬆️ Upload artifact - dist folder'
         uses: actions/upload-artifact@v3
         with:
           name: 'dist'
