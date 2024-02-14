@@ -42,7 +42,8 @@ jobs:
         skip-existing: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
-    
+        packages-dir: dist-artifact/
+          
     - name: Create Github Release
       id: create_release
       uses: actions/create-release@latest
@@ -64,7 +65,6 @@ jobs:
 
     - name: Publish distribution 📦 to Github
       uses: xresloader/upload-to-github-release@main
-
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
