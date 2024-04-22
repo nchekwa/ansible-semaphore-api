@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost:3000/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**project_project_id_backup_get**](ProjectApi.md#project_project_id_backup_get) | **GET** /project/{project_id}/backup | Backup A Project
 [**project_project_id_delete**](ProjectApi.md#project_project_id_delete) | **DELETE** /project/{project_id}/ | Delete project
 [**project_project_id_environment_environment_id_delete**](ProjectApi.md#project_project_id_environment_environment_id_delete) | **DELETE** /project/{project_id}/environment/{environment_id} | Removes environment
 [**project_project_id_environment_environment_id_put**](ProjectApi.md#project_project_id_environment_environment_id_put) | **PUT** /project/{project_id}/environment/{environment_id} | Update environment
@@ -11,6 +12,12 @@ Method | HTTP request | Description
 [**project_project_id_environment_post**](ProjectApi.md#project_project_id_environment_post) | **POST** /project/{project_id}/environment | Add environment
 [**project_project_id_events_get**](ProjectApi.md#project_project_id_events_get) | **GET** /project/{project_id}/events | Get Events related to this project
 [**project_project_id_get**](ProjectApi.md#project_project_id_get) | **GET** /project/{project_id}/ | Fetch project
+[**project_project_id_integrations_get**](ProjectApi.md#project_project_id_integrations_get) | **GET** /project/{project_id}/integrations | get all integrations
+[**project_project_id_integrations_integration_id_delete**](ProjectApi.md#project_project_id_integrations_integration_id_delete) | **DELETE** /project/{project_id}/integrations/{integration_id} | Remove integration
+[**project_project_id_integrations_integration_id_matchers_post**](ProjectApi.md#project_project_id_integrations_integration_id_matchers_post) | **POST** /project/{project_id}/integrations/{integration_id}/matchers | Add Integration Matcher
+[**project_project_id_integrations_integration_id_put**](ProjectApi.md#project_project_id_integrations_integration_id_put) | **PUT** /project/{project_id}/integrations/{integration_id} | Update Integration
+[**project_project_id_integrations_integration_id_values_post**](ProjectApi.md#project_project_id_integrations_integration_id_values_post) | **POST** /project/{project_id}/integrations/{integration_id}/values | Add Integration Extracted Value
+[**project_project_id_integrations_post**](ProjectApi.md#project_project_id_integrations_post) | **POST** /project/{project_id}/integrations | create a new integration
 [**project_project_id_inventory_get**](ProjectApi.md#project_project_id_inventory_get) | **GET** /project/{project_id}/inventory | Get inventory
 [**project_project_id_inventory_inventory_id_delete**](ProjectApi.md#project_project_id_inventory_inventory_id_delete) | **DELETE** /project/{project_id}/inventory/{inventory_id} | Removes inventory
 [**project_project_id_inventory_inventory_id_put**](ProjectApi.md#project_project_id_inventory_inventory_id_put) | **PUT** /project/{project_id}/inventory/{inventory_id} | Updates inventory
@@ -47,6 +54,90 @@ Method | HTTP request | Description
 [**project_project_id_views_view_id_put**](ProjectApi.md#project_project_id_views_view_id_put) | **PUT** /project/{project_id}/views/{view_id} | Updates view
 
 
+# **project_project_id_backup_get**
+> ProjectBackup project_project_id_backup_get(project_id)
+
+Backup A Project
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.models.project_backup import ProjectBackup
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+
+    try:
+        # Backup A Project
+        api_response = api_instance.project_project_id_backup_get(project_id)
+        print("The response of ProjectApi->project_project_id_backup_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_backup_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+
+### Return type
+
+[**ProjectBackup**](ProjectBackup.md)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain; charset=utf-8
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Backup |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **project_project_id_delete**
 > project_project_id_delete(project_id)
 
@@ -56,9 +147,8 @@ Delete project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -103,6 +193,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -121,6 +212,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Project deleted |  -  |
@@ -136,9 +228,8 @@ Removes environment
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -184,6 +275,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -203,6 +295,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | environment removed |  -  |
@@ -218,9 +311,8 @@ Update environment
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.environment_request import EnvironmentRequest
 from semaphore_api.rest import ApiException
@@ -268,6 +360,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -288,6 +381,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Environment Updated |  -  |
@@ -303,9 +397,8 @@ Get environment
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.environment import Environment
 from semaphore_api.rest import ApiException
@@ -355,6 +448,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -375,6 +469,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | environment |  -  |
@@ -390,9 +485,8 @@ Add environment
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.environment_request import EnvironmentRequest
 from semaphore_api.rest import ApiException
@@ -439,6 +533,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -458,6 +553,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Environment created |  -  |
@@ -473,9 +569,8 @@ Get Events related to this project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.event import Event
 from semaphore_api.rest import ApiException
@@ -523,6 +618,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -541,6 +637,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Array of events in chronological order |  -  |
@@ -556,9 +653,8 @@ Fetch project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project import Project
 from semaphore_api.rest import ApiException
@@ -606,6 +702,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -624,9 +721,524 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Project |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **project_project_id_integrations_get**
+> List[Integration] project_project_id_integrations_get(project_id)
+
+get all integrations
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.models.integration import Integration
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+
+    try:
+        # get all integrations
+        api_response = api_instance.project_project_id_integrations_get(project_id)
+        print("The response of ProjectApi->project_project_id_integrations_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_integrations_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+
+### Return type
+
+[**List[Integration]**](Integration.md)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain; charset=utf-8
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | integration |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **project_project_id_integrations_integration_id_delete**
+> project_project_id_integrations_integration_id_delete(project_id, integration_id)
+
+Remove integration
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+    integration_id = 11 # int | integration ID
+
+    try:
+        # Remove integration
+        api_instance.project_project_id_integrations_integration_id_delete(project_id, integration_id)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_integrations_integration_id_delete: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+ **integration_id** | **int**| integration ID | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | integration removed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **project_project_id_integrations_integration_id_matchers_post**
+> project_project_id_integrations_integration_id_matchers_post(project_id, integration_id, integration_matcher)
+
+Add Integration Matcher
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.models.integration_matcher import IntegrationMatcher
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+    integration_id = 11 # int | integration ID
+    integration_matcher = semaphore_api.IntegrationMatcher() # IntegrationMatcher | 
+
+    try:
+        # Add Integration Matcher
+        api_instance.project_project_id_integrations_integration_id_matchers_post(project_id, integration_id, integration_matcher)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_integrations_integration_id_matchers_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+ **integration_id** | **int**| integration ID | 
+ **integration_matcher** | [**IntegrationMatcher**](IntegrationMatcher.md)|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Integration Matcher Created |  -  |
+**400** | Bad Integration Matcher params |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **project_project_id_integrations_integration_id_put**
+> project_project_id_integrations_integration_id_put(project_id, integration_id, integration)
+
+Update Integration
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.models.integration_request import IntegrationRequest
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+    integration_id = 11 # int | integration ID
+    integration = semaphore_api.IntegrationRequest() # IntegrationRequest | 
+
+    try:
+        # Update Integration
+        api_instance.project_project_id_integrations_integration_id_put(project_id, integration_id, integration)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_integrations_integration_id_put: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+ **integration_id** | **int**| integration ID | 
+ **integration** | [**IntegrationRequest**](IntegrationRequest.md)|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | Integration updated |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **project_project_id_integrations_integration_id_values_post**
+> project_project_id_integrations_integration_id_values_post(project_id, integration_id, integration_extracted_value)
+
+Add Integration Extracted Value
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.models.integration_extract_value import IntegrationExtractValue
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+    integration_id = 11 # int | integration ID
+    integration_extracted_value = semaphore_api.IntegrationExtractValue() # IntegrationExtractValue | 
+
+    try:
+        # Add Integration Extracted Value
+        api_instance.project_project_id_integrations_integration_id_values_post(project_id, integration_id, integration_extracted_value)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_integrations_integration_id_values_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+ **integration_id** | **int**| integration ID | 
+ **integration_extracted_value** | [**IntegrationExtractValue**](IntegrationExtractValue.md)|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Integration Extract Value Created |  -  |
+**400** | Bad Integration Extract Value params |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **project_project_id_integrations_post**
+> Integration project_project_id_integrations_post(project_id, integration)
+
+create a new integration
+
+### Example
+
+* Api Key Authentication (cookie):
+* Api Key Authentication (bearer):
+
+```python
+import semaphore_api
+from semaphore_api.models.integration import Integration
+from semaphore_api.models.integration_request import IntegrationRequest
+from semaphore_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:3000/api
+# See configuration.py for a list of all supported configuration parameters.
+configuration = semaphore_api.Configuration(
+    host = "http://localhost:3000/api"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: cookie
+configuration.api_key['cookie'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['cookie'] = 'Bearer'
+
+# Configure API key authorization: bearer
+configuration.api_key['bearer'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['bearer'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with semaphore_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = semaphore_api.ProjectApi(api_client)
+    project_id = 1 # int | Project ID
+    integration = semaphore_api.IntegrationRequest() # IntegrationRequest | 
+
+    try:
+        # create a new integration
+        api_response = api_instance.project_project_id_integrations_post(project_id, integration)
+        print("The response of ProjectApi->project_project_id_integrations_post:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectApi->project_project_id_integrations_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **int**| Project ID | 
+ **integration** | [**IntegrationRequest**](IntegrationRequest.md)|  | 
+
+### Return type
+
+[**Integration**](Integration.md)
+
+### Authorization
+
+[cookie](../README.md#cookie), [bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain; charset=utf-8
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Integration Created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -639,9 +1251,8 @@ Get inventory
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.inventory import Inventory
 from semaphore_api.rest import ApiException
@@ -691,6 +1302,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -711,6 +1323,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | inventory |  -  |
@@ -726,9 +1339,8 @@ Removes inventory
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -774,6 +1386,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -793,6 +1406,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | inventory removed |  -  |
@@ -808,9 +1422,8 @@ Updates inventory
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.inventory_request import InventoryRequest
 from semaphore_api.rest import ApiException
@@ -858,6 +1471,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -878,6 +1492,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Inventory updated |  -  |
@@ -893,9 +1508,8 @@ create inventory
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.inventory import Inventory
 from semaphore_api.models.inventory_request import InventoryRequest
@@ -945,6 +1559,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -964,6 +1579,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | inventory created |  -  |
@@ -979,9 +1595,8 @@ Get access keys linked to project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.access_key import AccessKey
 from semaphore_api.rest import ApiException
@@ -1032,6 +1647,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1053,6 +1669,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Access Keys |  -  |
@@ -1068,9 +1685,8 @@ Removes access key
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -1116,6 +1732,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1135,6 +1752,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | access key removed |  -  |
@@ -1150,9 +1768,8 @@ Updates access key
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.access_key_request import AccessKeyRequest
 from semaphore_api.rest import ApiException
@@ -1200,6 +1817,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1220,6 +1838,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Key updated |  -  |
@@ -1236,9 +1855,8 @@ Add access key
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.access_key_request import AccessKeyRequest
 from semaphore_api.rest import ApiException
@@ -1285,6 +1903,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1304,6 +1923,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Access Key created |  -  |
@@ -1320,9 +1940,8 @@ Update project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project_project_id_put_request import ProjectProjectIdPutRequest
 from semaphore_api.rest import ApiException
@@ -1369,6 +1988,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1388,6 +2008,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Project saved |  -  |
@@ -1403,9 +2024,8 @@ Get repositories
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.repository import Repository
 from semaphore_api.rest import ApiException
@@ -1455,6 +2075,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1475,6 +2096,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | repositories |  -  |
@@ -1490,9 +2112,8 @@ Add repository
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.repository_request import RepositoryRequest
 from semaphore_api.rest import ApiException
@@ -1539,6 +2160,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1558,6 +2180,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Repository created |  -  |
@@ -1573,9 +2196,8 @@ Removes repository
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -1621,6 +2243,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1640,6 +2263,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | repository removed |  -  |
@@ -1655,9 +2279,8 @@ Updates repository
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.repository_request import RepositoryRequest
 from semaphore_api.rest import ApiException
@@ -1705,6 +2328,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1725,6 +2349,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Repository updated |  -  |
@@ -1741,9 +2366,8 @@ Fetch permissions of the current user for project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project_project_id_role_get200_response import ProjectProjectIdRoleGet200Response
 from semaphore_api.rest import ApiException
@@ -1791,6 +2415,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1809,6 +2434,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Permissions |  -  |
@@ -1824,9 +2450,8 @@ Get Tasks related to current project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.task import Task
 from semaphore_api.rest import ApiException
@@ -1874,6 +2499,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1892,6 +2518,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Array of tasks in chronological order |  -  |
@@ -1907,9 +2534,8 @@ Get last 200 Tasks related to current project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.task import Task
 from semaphore_api.rest import ApiException
@@ -1957,6 +2583,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -1975,6 +2602,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Array of tasks in chronological order |  -  |
@@ -1990,9 +2618,8 @@ Starts a job
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project_project_id_tasks_post_request import ProjectProjectIdTasksPostRequest
 from semaphore_api.models.task import Task
@@ -2042,6 +2669,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2061,6 +2689,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Task queued |  -  |
@@ -2076,9 +2705,8 @@ Deletes task (including output)
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -2124,6 +2752,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2143,6 +2772,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | task deleted |  -  |
@@ -2158,9 +2788,8 @@ Get a single task
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.task import Task
 from semaphore_api.rest import ApiException
@@ -2209,6 +2838,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2228,6 +2858,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Task |  -  |
@@ -2243,9 +2874,8 @@ Get task output
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.task_output import TaskOutput
 from semaphore_api.rest import ApiException
@@ -2294,6 +2924,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2313,6 +2944,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | output |  -  |
@@ -2328,9 +2960,8 @@ Stop a job
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -2376,6 +3007,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2395,6 +3027,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Task queued |  -  |
@@ -2410,9 +3043,8 @@ Get template
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.template import Template
 from semaphore_api.rest import ApiException
@@ -2462,6 +3094,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2482,6 +3115,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | template |  -  |
@@ -2497,9 +3131,8 @@ create template
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.template_request import TemplateRequest
 from semaphore_api.rest import ApiException
@@ -2548,6 +3181,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2567,6 +3201,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | template created |  -  |
@@ -2582,9 +3217,8 @@ Removes template
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -2630,6 +3264,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2649,6 +3284,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | template removed |  -  |
@@ -2664,9 +3300,8 @@ Get template
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.template import Template
 from semaphore_api.rest import ApiException
@@ -2715,6 +3350,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2734,6 +3370,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | template object |  -  |
@@ -2749,9 +3386,8 @@ Updates template
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.template_request import TemplateRequest
 from semaphore_api.rest import ApiException
@@ -2799,6 +3435,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2819,6 +3456,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | template updated |  -  |
@@ -2834,9 +3472,8 @@ Get users linked to project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project_user import ProjectUser
 from semaphore_api.rest import ApiException
@@ -2886,6 +3523,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2906,6 +3544,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Users |  -  |
@@ -2921,9 +3560,8 @@ Link user to project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project_project_id_users_post_request import ProjectProjectIdUsersPostRequest
 from semaphore_api.rest import ApiException
@@ -2970,6 +3608,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -2989,6 +3628,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | User added |  -  |
@@ -3004,9 +3644,8 @@ Removes user from project
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -3052,6 +3691,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -3071,6 +3711,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | User removed |  -  |
@@ -3086,9 +3727,8 @@ Get view
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.view import View
 from semaphore_api.rest import ApiException
@@ -3136,6 +3776,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -3154,6 +3795,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | view |  -  |
@@ -3169,9 +3811,8 @@ create view
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.view import View
 from semaphore_api.models.view_request import ViewRequest
@@ -3221,6 +3862,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -3240,6 +3882,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | view created |  -  |
@@ -3255,9 +3898,8 @@ Removes view
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -3303,6 +3945,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -3322,6 +3965,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | view removed |  -  |
@@ -3337,9 +3981,8 @@ Get view
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.view import View
 from semaphore_api.rest import ApiException
@@ -3388,6 +4031,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -3407,6 +4051,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | view object |  -  |
@@ -3422,9 +4067,8 @@ Updates view
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.view_request import ViewRequest
 from semaphore_api.rest import ApiException
@@ -3472,6 +4116,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -3492,6 +4137,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | view updated |  -  |

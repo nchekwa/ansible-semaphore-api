@@ -26,6 +26,13 @@ class TestProjectApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_project_project_id_backup_get(self) -> None:
+        """Test case for project_project_id_backup_get
+
+        Backup A Project
+        """
+        pass
+
     def test_project_project_id_delete(self) -> None:
         """Test case for project_project_id_delete
 
@@ -72,6 +79,48 @@ class TestProjectApi(unittest.TestCase):
         """Test case for project_project_id_get
 
         Fetch project
+        """
+        pass
+
+    def test_project_project_id_integrations_get(self) -> None:
+        """Test case for project_project_id_integrations_get
+
+        get all integrations
+        """
+        pass
+
+    def test_project_project_id_integrations_integration_id_delete(self) -> None:
+        """Test case for project_project_id_integrations_integration_id_delete
+
+        Remove integration
+        """
+        pass
+
+    def test_project_project_id_integrations_integration_id_matchers_post(self) -> None:
+        """Test case for project_project_id_integrations_integration_id_matchers_post
+
+        Add Integration Matcher
+        """
+        pass
+
+    def test_project_project_id_integrations_integration_id_put(self) -> None:
+        """Test case for project_project_id_integrations_integration_id_put
+
+        Update Integration
+        """
+        pass
+
+    def test_project_project_id_integrations_integration_id_values_post(self) -> None:
+        """Test case for project_project_id_integrations_integration_id_values_post
+
+        Add Integration Extracted Value
+        """
+        pass
+
+    def test_project_project_id_integrations_post(self) -> None:
+        """Test case for project_project_id_integrations_post
+
+        create a new integration
         """
         pass
 

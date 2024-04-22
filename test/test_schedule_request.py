@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.schedule_request import ScheduleRequest
 

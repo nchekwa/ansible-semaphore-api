@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
@@ -20,12 +21,12 @@ json = "{}"
 # create an instance of TemplateSurveyVar from a JSON string
 template_survey_var_instance = TemplateSurveyVar.from_json(json)
 # print the JSON string representation of the object
-print TemplateSurveyVar.to_json()
+print(TemplateSurveyVar.to_json())
 
 # convert the object into a dict
 template_survey_var_dict = template_survey_var_instance.to_dict()
 # create an instance of TemplateSurveyVar from a dict
-template_survey_var_form_dict = template_survey_var.from_dict(template_survey_var_dict)
+template_survey_var_from_dict = TemplateSurveyVar.from_dict(template_survey_var_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

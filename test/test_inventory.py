@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.inventory import Inventory
 

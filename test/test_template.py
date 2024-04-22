@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.template import Template
 
@@ -47,7 +46,8 @@ class TestTemplate(unittest.TestCase):
                 arguments = '[]',
                 description = 'Hello, World!',
                 allow_override_args_in_task = False,
-                suppress_success_alerts = True
+                suppress_success_alerts = True,
+                app = ''
             )
         else:
             return Template(

@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.access_key_request_login_password import AccessKeyRequestLoginPassword
 

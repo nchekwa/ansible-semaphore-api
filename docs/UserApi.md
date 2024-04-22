@@ -25,9 +25,8 @@ Fetch logged in user
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.user import User
 from semaphore_api.rest import ApiException
@@ -73,6 +72,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -89,6 +89,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | User |  -  |
@@ -104,9 +105,8 @@ Expires API token
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -151,6 +151,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **api_token_id** | **str**|  | 
@@ -169,6 +170,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Expired API Token |  -  |
@@ -184,9 +186,8 @@ Fetch API tokens for user
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.api_token import APIToken
 from semaphore_api.rest import ApiException
@@ -232,6 +233,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -248,6 +250,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | API Tokens |  -  |
@@ -263,9 +266,8 @@ Create an API token
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.api_token import APIToken
 from semaphore_api.rest import ApiException
@@ -311,6 +313,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -327,6 +330,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | API Token |  -  |
@@ -342,9 +346,8 @@ Fetches all users
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.user import User
 from semaphore_api.rest import ApiException
@@ -390,6 +393,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -406,6 +410,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Users |  -  |
@@ -421,9 +426,8 @@ Creates a user
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.user import User
 from semaphore_api.models.user_request import UserRequest
@@ -472,6 +476,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | [**UserRequest**](UserRequest.md)|  | 
@@ -490,6 +495,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **400** | User creation failed |  -  |
@@ -506,9 +512,8 @@ Deletes user
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -553,6 +558,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **int**| User ID | 
@@ -571,6 +577,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | User deleted |  -  |
@@ -586,9 +593,8 @@ Fetches a user profile
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.user import User
 from semaphore_api.rest import ApiException
@@ -636,6 +642,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **int**| User ID | 
@@ -654,6 +661,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | User profile |  -  |
@@ -669,9 +677,8 @@ Updates user password
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.users_user_id_password_post_request import UsersUserIdPasswordPostRequest
 from semaphore_api.rest import ApiException
@@ -718,6 +725,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **int**| User ID | 
@@ -737,6 +745,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Password updated |  -  |
@@ -752,9 +761,8 @@ Updates user details
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.user_put_request import UserPutRequest
 from semaphore_api.rest import ApiException
@@ -801,6 +809,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **int**| User ID | 
@@ -820,6 +829,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | User Updated |  -  |

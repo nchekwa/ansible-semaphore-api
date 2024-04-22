@@ -11,31 +11,21 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import StrictInt, StrictStr
 
+from pydantic import Field, StrictInt, StrictStr
 from typing import List
-
+from typing_extensions import Annotated
 from semaphore_api.models.api_token import APIToken
 from semaphore_api.models.user import User
 from semaphore_api.models.user_put_request import UserPutRequest
 from semaphore_api.models.user_request import UserRequest
 from semaphore_api.models.users_user_id_password_post_request import UsersUserIdPasswordPostRequest
 
-from semaphore_api.api_client import ApiClient
+from semaphore_api.api_client import ApiClient, RequestSerialized
 from semaphore_api.api_response import ApiResponse
 from semaphore_api.rest import RESTResponseType
 
@@ -102,8 +92,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "User"
-            
+            '200': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -165,8 +154,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "User"
-            
+            '200': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -228,8 +216,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "User"
-            
+            '200': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -244,19 +231,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -352,7 +338,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -418,7 +404,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -484,7 +470,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -500,19 +486,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -599,8 +584,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[APIToken]"
-            
+            '200': "List[APIToken]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -662,8 +646,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[APIToken]"
-            
+            '200': "List[APIToken]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -725,8 +708,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[APIToken]"
-            
+            '200': "List[APIToken]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -741,19 +723,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -845,8 +826,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '201': "APIToken"
-            
+            '201': "APIToken",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -908,8 +888,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '201': "APIToken"
-            
+            '201': "APIToken",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -971,8 +950,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '201': "APIToken"
-            
+            '201': "APIToken",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -987,19 +965,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1091,8 +1068,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[User]"
-            
+            '200': "List[User]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1154,8 +1130,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[User]"
-            
+            '200': "List[User]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1217,8 +1192,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[User]"
-            
+            '200': "List[User]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1233,19 +1207,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1342,8 +1315,7 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '400': None,
-            '201': "User"
-            
+            '201': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1410,8 +1382,7 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '400': None,
-            '201': "User"
-            
+            '201': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1478,8 +1449,7 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '400': None,
-            '201': "User"
-            
+            '201': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1495,19 +1465,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1618,7 +1587,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1684,7 +1653,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1750,7 +1719,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1766,19 +1735,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1869,8 +1837,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "User"
-            
+            '200': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1936,8 +1903,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "User"
-            
+            '200': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2003,8 +1969,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "User"
-            
+            '200': "User",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2020,19 +1985,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2134,7 +2098,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2204,7 +2168,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2274,7 +2238,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2291,19 +2255,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2413,7 +2376,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2483,7 +2446,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2553,7 +2516,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            
+            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2570,19 +2533,18 @@ class UserApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

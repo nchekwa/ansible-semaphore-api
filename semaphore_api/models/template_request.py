@@ -17,16 +17,12 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
 from typing_extensions import Annotated
 from semaphore_api.models.template_survey_var import TemplateSurveyVar
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class TemplateRequest(BaseModel):
     """
@@ -47,10 +43,11 @@ class TemplateRequest(BaseModel):
     survey_vars: Optional[List[TemplateSurveyVar]] = None
     __properties: ClassVar[List[str]] = ["project_id", "inventory_id", "repository_id", "environment_id", "view_id", "name", "playbook", "arguments", "description", "allow_override_args_in_task", "limit", "suppress_success_alerts", "survey_vars"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -63,7 +60,7 @@ class TemplateRequest(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of TemplateRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -77,10 +74,12 @@ class TemplateRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of each item in survey_vars (list)
@@ -93,7 +92,7 @@ class TemplateRequest(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of TemplateRequest from a dict"""
         if obj is None:
             return None
@@ -114,7 +113,7 @@ class TemplateRequest(BaseModel):
             "allow_override_args_in_task": obj.get("allow_override_args_in_task"),
             "limit": obj.get("limit"),
             "suppress_success_alerts": obj.get("suppress_success_alerts"),
-            "survey_vars": [TemplateSurveyVar.from_dict(_item) for _item in obj.get("survey_vars")] if obj.get("survey_vars") is not None else None
+            "survey_vars": [TemplateSurveyVar.from_dict(_item) for _item in obj["survey_vars"]] if obj.get("survey_vars") is not None else None
         })
         return _obj
 

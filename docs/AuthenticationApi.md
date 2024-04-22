@@ -23,9 +23,8 @@ Fetches metadata for login, such as available OIDC providers
 
 ### Example
 
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.login_metadata import LoginMetadata
 from semaphore_api.rest import ApiException
@@ -55,6 +54,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -71,6 +71,7 @@ No authorization required
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Login metadata |  -  |
@@ -86,9 +87,8 @@ Upon success you will be logged in
 
 ### Example
 
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.login import Login
 from semaphore_api.rest import ApiException
@@ -118,6 +118,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **login_body** | [**Login**](Login.md)|  | 
@@ -136,6 +137,7 @@ No authorization required
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | You are logged in |  -  |
@@ -152,9 +154,8 @@ Destroys current session
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -197,6 +198,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -213,6 +215,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Your session was successfully nuked |  -  |
@@ -230,9 +233,8 @@ The user agent is redirected to this endpoint when chosing to sign in via OIDC
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -277,6 +279,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider_id** | **str**|  | 
@@ -295,6 +298,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **302** | Redirection to the OIDC provider on success, or to the login page on error |  -  |
@@ -312,9 +316,8 @@ The user agent is redirected here by the OIDC provider to complete authenticatio
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -359,6 +362,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider_id** | **str**|  | 
@@ -377,6 +381,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **302** | Redirection to the Semaphore root URL on success, or to the login page on error |  -  |
@@ -392,9 +397,8 @@ Expires API token
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -439,6 +443,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **api_token_id** | **str**|  | 
@@ -457,6 +462,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Expired API Token |  -  |
@@ -472,9 +478,8 @@ Fetch API tokens for user
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.api_token import APIToken
 from semaphore_api.rest import ApiException
@@ -520,6 +525,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -536,6 +542,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | API Tokens |  -  |
@@ -551,9 +558,8 @@ Create an API token
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.api_token import APIToken
 from semaphore_api.rest import ApiException
@@ -599,6 +605,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -615,6 +622,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | API Token |  -  |

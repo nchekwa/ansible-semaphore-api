@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.login_metadata_oidc_providers_inner import LoginMetadataOidcProvidersInner
 

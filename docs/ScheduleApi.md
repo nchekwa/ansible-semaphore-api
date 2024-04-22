@@ -19,9 +19,8 @@ create schedule
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.schedule import Schedule
 from semaphore_api.models.schedule_request import ScheduleRequest
@@ -71,6 +70,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -90,6 +90,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | schedule created |  -  |
@@ -105,9 +106,8 @@ Deletes schedule
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -153,6 +153,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -172,6 +173,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | schedule deleted |  -  |
@@ -187,9 +189,8 @@ Get schedule
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.schedule import Schedule
 from semaphore_api.rest import ApiException
@@ -238,6 +239,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -257,6 +259,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Schedule |  -  |
@@ -272,9 +275,8 @@ Updates schedule
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.schedule_request import ScheduleRequest
 from semaphore_api.rest import ApiException
@@ -322,6 +324,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -342,6 +345,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | schedule updated |  -  |

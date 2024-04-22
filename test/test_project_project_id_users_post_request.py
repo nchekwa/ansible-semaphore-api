@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.project_project_id_users_post_request import ProjectProjectIdUsersPostRequest
 

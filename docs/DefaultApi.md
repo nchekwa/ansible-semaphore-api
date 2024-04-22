@@ -21,9 +21,8 @@ Get Events related to Semaphore and projects you are part of
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.event import Event
 from semaphore_api.rest import ApiException
@@ -69,6 +68,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -85,6 +85,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Array of events in chronological order |  -  |
@@ -100,9 +101,8 @@ Get last 200 Events related to Semaphore and projects you are part of
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.event import Event
 from semaphore_api.rest import ApiException
@@ -148,6 +148,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -164,6 +165,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Array of events in chronological order |  -  |
@@ -181,9 +183,8 @@ you must be authenticated to use this
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.info_type import InfoType
 from semaphore_api.rest import ApiException
@@ -229,6 +230,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -245,6 +247,7 @@ This endpoint does not need any parameter.
  - **Accept**: application/json, text/plain; charset=utf-8
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | ok |  -  |
@@ -258,9 +261,8 @@ PING test
 
 ### Example
 
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -289,6 +291,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -305,6 +308,7 @@ No authorization required
  - **Accept**: text/plain
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful \&quot;PONG\&quot; reply |  * content-type -  <br>  |
@@ -320,9 +324,8 @@ Update user role
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.models.project_project_id_users_user_id_put_request import ProjectProjectIdUsersUserIdPutRequest
 from semaphore_api.rest import ApiException
@@ -370,6 +373,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **int**| Project ID | 
@@ -390,6 +394,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | User updated |  -  |
@@ -405,9 +410,8 @@ Websocket handler
 
 * Api Key Authentication (cookie):
 * Api Key Authentication (bearer):
+
 ```python
-import time
-import os
 import semaphore_api
 from semaphore_api.rest import ApiException
 from pprint import pprint
@@ -450,6 +454,7 @@ with semaphore_api.ApiClient(configuration) as api_client:
 
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -466,6 +471,7 @@ void (empty response body)
  - **Accept**: Not defined
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |

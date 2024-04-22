@@ -40,6 +40,13 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
+    def test_projects_restore_post(self) -> None:
+        """Test case for projects_restore_post
+
+        Restore Project
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

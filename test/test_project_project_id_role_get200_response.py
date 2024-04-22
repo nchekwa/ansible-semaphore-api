@@ -13,7 +13,6 @@
 
 
 import unittest
-import datetime
 
 from semaphore_api.models.project_project_id_role_get200_response import ProjectProjectIdRoleGet200Response
 

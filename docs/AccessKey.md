@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] 
@@ -21,12 +22,12 @@ json = "{}"
 # create an instance of AccessKey from a JSON string
 access_key_instance = AccessKey.from_json(json)
 # print the JSON string representation of the object
-print AccessKey.to_json()
+print(AccessKey.to_json())
 
 # convert the object into a dict
 access_key_dict = access_key_instance.to_dict()
 # create an instance of AccessKey from a dict
-access_key_form_dict = access_key.from_dict(access_key_dict)
+access_key_from_dict = AccessKey.from_dict(access_key_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -17,15 +17,12 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictInt, StrictStr, field_validator
 from semaphore_api.models.access_key_request_login_password import AccessKeyRequestLoginPassword
 from semaphore_api.models.access_key_request_ssh import AccessKeyRequestSsh
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class AccessKey(BaseModel):
     """
@@ -45,14 +42,15 @@ class AccessKey(BaseModel):
         if value is None:
             return value
 
-        if value not in ('none', 'ssh', 'login_password'):
+        if value not in set(['none', 'ssh', 'login_password']):
             raise ValueError("must be one of enum values ('none', 'ssh', 'login_password')")
         return value
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -65,7 +63,7 @@ class AccessKey(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of AccessKey from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -79,10 +77,12 @@ class AccessKey(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of login_password
@@ -94,7 +94,7 @@ class AccessKey(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of AccessKey from a dict"""
         if obj is None:
             return None
@@ -107,8 +107,8 @@ class AccessKey(BaseModel):
             "name": obj.get("name"),
             "type": obj.get("type"),
             "project_id": obj.get("project_id"),
-            "login_password": AccessKeyRequestLoginPassword.from_dict(obj.get("login_password")) if obj.get("login_password") is not None else None,
-            "ssh": AccessKeyRequestSsh.from_dict(obj.get("ssh")) if obj.get("ssh") is not None else None
+            "login_password": AccessKeyRequestLoginPassword.from_dict(obj["login_password"]) if obj.get("login_password") is not None else None,
+            "ssh": AccessKeyRequestSsh.from_dict(obj["ssh"]) if obj.get("ssh") is not None else None
         })
         return _obj
 
