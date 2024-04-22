@@ -35,7 +35,7 @@ jobs:
     needs: read-variables
     env:
       GIT_PUSH: "false"
-      OPENAPI_VERSION: "7.1.0"
+      OPENAPI_VERSION: "7.5.0"
       PYPI_NAME: ${{ needs.read-variables.outputs.PYPI_NAME }}
       PYPI_VERSION: ${{ needs.read-variables.outputs.PYPI_VERSION }}
       SEMAPHORE_VERSION: ${{ needs.read-variables.outputs.SEMAPHORE_VERSION }}
@@ -70,9 +70,10 @@ jobs:
             -g python \
             -o templates/python
 
-      - name: Apply Patch on Python Template
-        run: |
-          patch -p1 /tmp/templates/python/api_client.mustache < $GITHUB_WORKSPACE/patch/api_client.mustache.patch
+      ###### No need anymore from 7.5.0
+      #- name: Apply Patch on Python Template
+      #  run: |
+      #   patch -p1 /tmp/templates/python/api_client.mustache < $GITHUB_WORKSPACE/patch/api_client.mustache.patch
           
       - name: OpenAPI Generate
         run: |
