@@ -32,7 +32,8 @@ jobs:
       
       - name: Extract version from Ansible Semaphore Github API response
         run: |
-          PAGE_SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
+          #PAGE_SEMAPHORE_VERSION=$(curl -s https://api.github.com/repos/ansible-semaphore/semaphore/releases/latest | jq -r '.name' | sed 's/^v//')
+          PAGE_SEMAPHORE_VERSION=$(curl -s https://api.github.com/repositories/23267883/releases/latest | jq -r '.name' | sed 's/^v//')
           echo "Extracted version: $PAGE_SEMAPHORE_VERSION"
           echo "PAGE_SEMAPHORE_VERSION=$PAGE_SEMAPHORE_VERSION" >> "$GITHUB_ENV"
         shell: bash
