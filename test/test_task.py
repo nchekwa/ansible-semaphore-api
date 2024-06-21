@@ -41,6 +41,7 @@ class TestTask(unittest.TestCase):
                 debug = True,
                 playbook = '',
                 environment = '',
+                secret = '',
                 limit = ''
             )
         else:

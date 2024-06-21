@@ -40,6 +40,7 @@ class TestTemplateRequest(unittest.TestCase):
                 repository_id = 1,
                 environment_id = 1,
                 view_id = 1,
+                vault_id = 1,
                 name = 'Test',
                 playbook = 'test.yml',
                 arguments = '[]',

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **debug** | **bool** |  | [optional] 
 **playbook** | **str** |  | [optional] 
 **environment** | **str** |  | [optional] 
+**secret** | **str** |  | [optional] 
 **limit** | **str** |  | [optional] 
 
 ## Example

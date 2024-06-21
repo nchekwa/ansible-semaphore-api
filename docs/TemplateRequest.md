@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **repository_id** | **int** |  | [optional] 
 **environment_id** | **int** |  | [optional] 
 **view_id** | **int** |  | [optional] 
+**vault_id** | **int** |  | [optional] 
 **name** | **str** |  | [optional] 
 **playbook** | **str** |  | [optional] 
 **arguments** | **str** |  | [optional] 

@@ -33,6 +33,7 @@ class TemplateRequest(BaseModel):
     repository_id: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
     environment_id: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
     view_id: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
+    vault_id: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
     name: Optional[StrictStr] = None
     playbook: Optional[StrictStr] = None
     arguments: Optional[StrictStr] = None
@@ -41,7 +42,7 @@ class TemplateRequest(BaseModel):
     limit: Optional[StrictStr] = None
     suppress_success_alerts: Optional[StrictBool] = None
     survey_vars: Optional[List[TemplateSurveyVar]] = None
-    __properties: ClassVar[List[str]] = ["project_id", "inventory_id", "repository_id", "environment_id", "view_id", "name", "playbook", "arguments", "description", "allow_override_args_in_task", "limit", "suppress_success_alerts", "survey_vars"]
+    __properties: ClassVar[List[str]] = ["project_id", "inventory_id", "repository_id", "environment_id", "view_id", "vault_id", "name", "playbook", "arguments", "description", "allow_override_args_in_task", "limit", "suppress_success_alerts", "survey_vars"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -106,6 +107,7 @@ class TemplateRequest(BaseModel):
             "repository_id": obj.get("repository_id"),
             "environment_id": obj.get("environment_id"),
             "view_id": obj.get("view_id"),
+            "vault_id": obj.get("vault_id"),
             "name": obj.get("name"),
             "playbook": obj.get("playbook"),
             "arguments": obj.get("arguments"),

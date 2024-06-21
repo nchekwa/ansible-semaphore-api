@@ -32,8 +32,9 @@ class Task(BaseModel):
     debug: Optional[StrictBool] = None
     playbook: Optional[StrictStr] = None
     environment: Optional[StrictStr] = None
+    secret: Optional[StrictStr] = None
     limit: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "template_id", "status", "debug", "playbook", "environment", "limit"]
+    __properties: ClassVar[List[str]] = ["id", "template_id", "status", "debug", "playbook", "environment", "secret", "limit"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,6 +93,7 @@ class Task(BaseModel):
             "debug": obj.get("debug"),
             "playbook": obj.get("playbook"),
             "environment": obj.get("environment"),
+            "secret": obj.get("secret"),
             "limit": obj.get("limit")
         })
         return _obj
